@@ -32,10 +32,9 @@ namespace FoldVision
 
         private static string GetConfigPath()
         {
-            string userFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            string appFolder = Path.Combine(userFolder, "FoldVision");
-            Directory.CreateDirectory(appFolder);
-            return Path.Combine(appFolder, "settings.json");
+            // Para hacer la aplicación verdaderamente portable, guardamos los ajustes
+            // en la misma carpeta donde se encuentra el ejecutable.
+            return Path.Combine(AppContext.BaseDirectory, "settings.json");
         }
 
         public static void Load()

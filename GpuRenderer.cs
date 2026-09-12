@@ -111,20 +111,22 @@ namespace FoldVision
 
         private void CompileShaders()
         {
-            // Buscar FoldShader.hlsl junto al ejecutable (o al .csproj en desarrollo)
-            string shaderPath = Path.Combine(AppContext.BaseDirectory, "FoldShader.hlsl");
-            if (!File.Exists(shaderPath))
-                shaderPath = Path.Combine(
-                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!, "FoldShader.hlsl");
+            string src;
+            using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("FoldVision.FoldShader.hlsl"))
+            {
+                if (stream == null) throw new Exception("No se pudo encontrar el recurso FoldShader.hlsl incrustado.");
+                using (var reader = new StreamReader(stream))
+                {
+                    src = reader.ReadToEnd();
+                }
+            }
 
-            string src = File.ReadAllText(shaderPath);
-
-            Compiler.Compile(src, null, null, "VS", shaderPath, "vs_5_0", ShaderFlags.OptimizationLevel3,
+            Compiler.Compile(src, null, null, "VS", "FoldShader.hlsl", "vs_5_0", ShaderFlags.OptimizationLevel3,
                              out var vsBlob, out var vsErr);
             if (vsBlob == null)
                 throw new Exception($"Error compilando VS: {vsErr?.AsString()}");
 
-            Compiler.Compile(src, null, null, "PS", shaderPath, "ps_5_0", ShaderFlags.OptimizationLevel3,
+            Compiler.Compile(src, null, null, "PS", "FoldShader.hlsl", "ps_5_0", ShaderFlags.OptimizationLevel3,
                              out var psBlob, out var psErr);
             if (psBlob == null)
                 throw new Exception($"Error compilando PS: {psErr?.AsString()}");

@@ -14,6 +14,8 @@
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <UseRidGraph>true</UseRidGraph>
     <ApplicationIcon>FV.ico</ApplicationIcon>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,13 +31,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- Copiar el shader HLSL junto al ejecutable para que GpuRenderer lo cargue en runtime -->
-    <Content Include="FoldShader.hlsl">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="FV.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <EmbeddedResource Include="FoldShader.hlsl" />
+    <EmbeddedResource Include="FV.ico" />
   </ItemGroup>
 
 </Project>

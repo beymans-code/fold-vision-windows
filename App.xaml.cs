@@ -25,10 +25,19 @@ namespace FoldVision
             menu.Items.Add("-");
             menu.Items.Add("❌ Salir", null, (s, args) => Shutdown());
 
+            System.Drawing.Icon appIcon;
+            using (var stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("FoldVision.FV.ico"))
+            {
+                if (stream != null)
+                    appIcon = new System.Drawing.Icon(stream);
+                else
+                    appIcon = System.Drawing.SystemIcons.Application;
+            }
+
             _notifyIcon = new System.Windows.Forms.NotifyIcon
             {
                 Text = "FoldVision",
-                Icon = new System.Drawing.Icon("FV.ico"),
+                Icon = appIcon,
                 ContextMenuStrip = menu,
                 Visible = true
             };
