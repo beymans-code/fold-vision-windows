@@ -28,7 +28,7 @@ namespace FoldVision
             _notifyIcon = new System.Windows.Forms.NotifyIcon
             {
                 Text = "FoldVision",
-                Icon = System.Drawing.SystemIcons.Application,
+                Icon = new System.Drawing.Icon("FV.ico"),
                 ContextMenuStrip = menu,
                 Visible = true
             };

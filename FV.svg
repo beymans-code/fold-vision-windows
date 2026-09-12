@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="12.891 10.161 483.511 489.509" width="483.511px" height="489.509px">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#030304"/>
+      <stop offset="1" stop-color="#08090A"/>
+    </linearGradient>
+    <linearGradient id="lidClosed" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#1B1E22"/>
+      <stop offset="0.5" stop-color="#292C31"/>
+      <stop offset="1" stop-color="#34373C"/>
+    </linearGradient>
+    <linearGradient id="lidMiddle" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#555A63"/>
+      <stop offset="0.5" stop-color="#9BA1AA"/>
+      <stop offset="1" stop-color="#777D87"/>
+    </linearGradient>
+    <linearGradient id="lidOpen" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#C8CDD5"/>
+      <stop offset="0.45" stop-color="#F5F6F8"/>
+      <stop offset="1" stop-color="#D9DDE3"/>
+    </linearGradient>
+    <linearGradient id="topBase" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#24272C"/>
+      <stop offset="1" stop-color="#111316"/>
+    </linearGradient>
+    <linearGradient id="base" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F0F2F5"/>
+      <stop offset="0.55" stop-color="#D2D6DC"/>
+      <stop offset="1" stop-color="#AEB4BD"/>
+    </linearGradient>
+  </defs>
+  <rect x="12.891" y="10.161" width="483.511" height="489.509" rx="72" fill="url(#bg)" style="stroke-width: 1;"/>
+  <path d="M 76.647 337.92 L 383.184 213.208" fill="none" stroke="url(#lidClosed)" stroke-width="23" stroke-linecap="round" style="stroke-width: 23;"/>
+  <path d="M 76.647 337.92 L 309.061 117.925" fill="none" stroke="url(#lidMiddle)" stroke-width="24" stroke-linecap="round" style="stroke-width: 24;"/>
+  <path d="M 76.647 337.92 L 207.646 60.773" fill="none" stroke="url(#lidOpen)" stroke-width="25" stroke-linecap="round" style="stroke-width: 25;"/>
+  <path d="M 76.187 331.595 L 415.741 331.595 C 426.353 331.595 435.999 338.38 438.892 347.104 C 440.822 353.89 435.999 358.736 428.282 359.705 L 80.046 359.705 C 70.399 359.705 63.647 353.89 63.647 346.135 C 63.647 338.38 68.47 332.564 76.187 331.595 Z" fill="url(#topBase)" style="stroke-width: 1;"/>
+  <path d="M 77.217 344.196 L 429.081 344.196 C 435.866 344.196 442.651 350.982 442.651 358.736 C 442.651 367.46 435.866 374.245 427.141 374.245 L 80.125 374.245 C 70.432 374.245 63.647 367.46 63.647 358.736 C 63.647 350.982 69.463 344.196 77.217 344.196 Z" fill="url(#base)" style="stroke-width: 1;"/>
+  <circle cx="79.607" cy="351.88" r="24.96" fill="#D7DBE1" style="stroke-width: 1;"/>
+  <circle cx="79.801" cy="351.828" r="17.262" fill="#EEF0F3" style="stroke-width: 1;"/>
+</svg>
