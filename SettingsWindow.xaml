@@ -73,9 +73,16 @@
             <TextBlock x:Name="AngleMaxValue" Grid.Column="1" Style="{StaticResource Value}" VerticalAlignment="Center"/>
         </Grid>
 
-        <!-- Auto inicio y Depuración -->
+        <!-- Modo de la aplicación -->
+        <TextBlock Style="{StaticResource Label}" Text="Modo de Captura" Margin="0,16,0,4"/>
+        <ComboBox x:Name="AppModeCombo" SelectionChanged="AppMode_Changed" 
+                  Background="#1E1E2E" Foreground="Black" Margin="0,0,0,16">
+            <ComboBoxItem Content="Modo Estático (Bajo consumo)"/>
+            <ComboBoxItem Content="Modo Live (Tiempo real - Backdrop)"/>
+        </ComboBox>
+
         <CheckBox x:Name="chkTabletMode" Content="Desactivar en modo tableta (0 grados)" 
-                  Foreground="#CDD6F4" Margin="0,16,0,0" Checked="TabletMode_Changed" Unchecked="TabletMode_Changed"/>
+                  Foreground="#CDD6F4" Checked="TabletMode_Changed" Unchecked="TabletMode_Changed"/>
 
         <CheckBox x:Name="AutoStartCheckBox" Content="Iniciar con Windows" 
                   Foreground="#CDD6F4" Margin="0,8,0,0" Checked="AutoStart_Changed" Unchecked="AutoStart_Changed"/>

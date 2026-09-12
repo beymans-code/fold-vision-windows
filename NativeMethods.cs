@@ -24,6 +24,13 @@ namespace FoldVision
             public byte  Data;   // 0 = tapa cerrada, 1 = tapa abierta
         }
 
+        public const uint WDA_NONE = 0x00000000;
+        public const uint WDA_MONITOR = 0x00000001;
+        public const uint WDA_EXCLUDEFROMCAPTURE = 0x00000011;
+
+        [DllImport("user32.dll")]
+        public static extern uint SetWindowDisplayAffinity(IntPtr hwnd, uint dwAffinity);
+
         [DllImport("user32.dll", SetLastError = true)]
         public static extern int GetWindowLong(IntPtr hWnd, int nIndex);
 
