@@ -47,7 +47,18 @@ namespace FoldVision
 
             SensorService.Instance.FoldFactorChanged += OnFoldFactorChanged;
             SensorService.Instance.AngleChanged += OnAngleChanged;
-            SensorService.Instance.Start();
+            
+            bool sensorAvailable = SensorService.Instance.Start();
+            if (!sensorAvailable)
+            {
+                System.Windows.MessageBox.Show(
+                    "FoldVision no es compatible con este dispositivo.\n\nSe requiere un sensor Inclinómetro de hardware integrado (común en portátiles 2-en-1 o plegables) para detectar el ángulo de la pantalla.", 
+                    "Hardware Incompatible", 
+                    System.Windows.MessageBoxButton.OK, 
+                    System.Windows.MessageBoxImage.Error);
+                Shutdown();
+                return;
+            }
         }
 
         private void OnFoldFactorChanged(object? sender, float foldFactor)
@@ -55,6 +66,12 @@ namespace FoldVision
             Dispatcher.Invoke(() =>
             {
                 if (_overlay == null) return;
+
+                if (AppSettings.DisableInTabletMode)
+                {
+                    bool isTabletMode = NativeMethods.GetSystemMetrics(NativeMethods.SM_CONVERTIBLESLATEMODE) == 0;
+                    if (isTabletMode) foldFactor = 0f;
+                }
 
                 if (foldFactor > 0.001f)
                 {

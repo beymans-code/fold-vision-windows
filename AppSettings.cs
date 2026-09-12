@@ -29,6 +29,7 @@ namespace FoldVision
 
         // ── Depuración ──────────────────────────────────────────────────
         public static bool ShowDebugAngle     = false;
+        public static bool DisableInTabletMode = true;
 
         private static string GetConfigPath()
         {
@@ -54,6 +55,7 @@ namespace FoldVision
                         AngleStart = data.AngleStart;
                         AngleMax = data.AngleMax;
                         ShowDebugAngle = data.ShowDebugAngle;
+                        DisableInTabletMode = data.DisableInTabletMode;
                     }
                 }
                 catch { /* Si hay error, se quedan los por defecto */ }
@@ -71,7 +73,8 @@ namespace FoldVision
                     BlurStrength = BlurStrength,
                     AngleStart = AngleStart,
                     AngleMax = AngleMax,
-                    ShowDebugAngle = ShowDebugAngle
+                    ShowDebugAngle = ShowDebugAngle,
+                    DisableInTabletMode = DisableInTabletMode
                 };
                 string json = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
                 File.WriteAllText(GetConfigPath(), json);
@@ -88,5 +91,6 @@ namespace FoldVision
         public float AngleStart { get; set; } = 110f;
         public float AngleMax { get; set; } = 140f;
         public bool ShowDebugAngle { get; set; } = false;
+        public bool DisableInTabletMode { get; set; } = true;
     }
 }

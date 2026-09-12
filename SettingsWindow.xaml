@@ -74,8 +74,11 @@
         </Grid>
 
         <!-- Auto inicio y Depuración -->
+        <CheckBox x:Name="chkTabletMode" Content="Desactivar en modo tableta (0 grados)" 
+                  Foreground="#CDD6F4" Margin="0,16,0,0" Checked="TabletMode_Changed" Unchecked="TabletMode_Changed"/>
+
         <CheckBox x:Name="AutoStartCheckBox" Content="Iniciar con Windows" 
-                  Foreground="#CDD6F4" Margin="0,16,0,0" Checked="AutoStart_Changed" Unchecked="AutoStart_Changed"/>
+                  Foreground="#CDD6F4" Margin="0,8,0,0" Checked="AutoStart_Changed" Unchecked="AutoStart_Changed"/>
         
         <CheckBox x:Name="ShowDebugCheckBox" Content="Mostrar ángulo en pantalla (OSD)" 
                   Foreground="#CDD6F4" Margin="0,8,0,0" Checked="ShowDebug_Changed" Unchecked="ShowDebug_Changed"/>

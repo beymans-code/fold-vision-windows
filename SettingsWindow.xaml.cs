@@ -16,12 +16,13 @@ namespace FoldVision
 
         private void LoadCurrentValues()
         {
-            DepthSlider.Value      = AppSettings.CameraDepth;
-            StretchSlider.Value    = AppSettings.StretchMultiplier;
-            BlurSlider.Value       = AppSettings.BlurStrength;
-            AngleStartSlider.Value = AppSettings.AngleStart;
-            AngleMaxSlider.Value   = AppSettings.AngleMax;
+            DepthSlider.Value           = AppSettings.CameraDepth;
+            StretchSlider.Value         = AppSettings.StretchMultiplier;
+            BlurSlider.Value            = AppSettings.BlurStrength;
+            AngleStartSlider.Value      = AppSettings.AngleStart;
+            AngleMaxSlider.Value        = AppSettings.AngleMax;
             ShowDebugCheckBox.IsChecked = AppSettings.ShowDebugAngle;
+            chkTabletMode.IsChecked     = AppSettings.DisableInTabletMode;
 
             // Verificar si el inicio automático está activo en el registro
             using (RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
@@ -134,6 +135,13 @@ namespace FoldVision
         {
             if (_isInitializing) return;
             AppSettings.ShowDebugAngle = ShowDebugCheckBox.IsChecked == true;
+            AppSettings.Save();
+        }
+
+        private void TabletMode_Changed(object sender, RoutedEventArgs e)
+        {
+            if (_isInitializing) return;
+            AppSettings.DisableInTabletMode = chkTabletMode.IsChecked == true;
             AppSettings.Save();
         }
     }
