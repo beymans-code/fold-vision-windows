@@ -39,9 +39,26 @@ namespace FoldVision
 
         private static string GetConfigPath()
         {
-            // Para hacer la aplicación verdaderamente portable, guardamos los ajustes
-            // en la misma carpeta donde se encuentra el ejecutable.
-            return Path.Combine(AppContext.BaseDirectory, "settings.json");
+            string baseDir = AppContext.BaseDirectory;
+            string programFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+            string programFilesX86 = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+
+            // Si la aplicación está instalada en Archivos de Programa, usamos AppData
+            // ya que no hay permisos de escritura en la carpeta de instalación.
+            if (baseDir.StartsWith(programFiles, StringComparison.OrdinalIgnoreCase) ||
+                baseDir.StartsWith(programFilesX86, StringComparison.OrdinalIgnoreCase))
+            {
+                string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                string configDir = Path.Combine(appData, "FoldVision");
+                if (!Directory.Exists(configDir))
+                {
+                    Directory.CreateDirectory(configDir);
+                }
+                return Path.Combine(configDir, "settings.json");
+            }
+
+            // Para la versión portable, lo guardamos en la misma carpeta
+            return Path.Combine(baseDir, "settings.json");
         }
 
         public static void Load()
