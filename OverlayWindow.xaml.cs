@@ -171,6 +171,26 @@ namespace FoldVision
 
         // ── API pública ──────────────────────────────────────────────────
 
+        public void SwitchCaptureMode()
+        {
+            if (_renderer == null) return;
+            
+            if (AppSettings.AppMode == "Live")
+            {
+                _staticCapture?.Dispose();
+                _staticCapture = null;
+                if (_liveCapture == null)
+                    _liveCapture = new LiveCaptureService(_renderer.Device);
+            }
+            else
+            {
+                _liveCapture?.Dispose();
+                _liveCapture = null;
+                if (_staticCapture == null)
+                    _staticCapture = new StaticCaptureService(_renderer.Device);
+            }
+        }
+
         /// <summary>Captura la pantalla y muestra el overlay.</summary>
         public void PrepareCapture()
         {

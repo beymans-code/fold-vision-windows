@@ -81,6 +81,11 @@ namespace FoldVision
             }
         }
 
+        public void SwitchCaptureMode()
+        {
+            _overlay?.SwitchCaptureMode();
+        }
+
         private void UpdateTrayMenuText()
         {
             if (_notifyIcon?.ContextMenuStrip == null) return;

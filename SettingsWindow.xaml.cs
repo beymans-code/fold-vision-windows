@@ -179,6 +179,11 @@ namespace FoldVision
             if (_isInitializing) return;
             AppSettings.AppMode = AppModeCombo.SelectedIndex == 1 ? "Live" : "Static";
             AppSettings.Save();
+
+            if (System.Windows.Application.Current is App app)
+            {
+                app.SwitchCaptureMode();
+            }
         }
 
         private void Language_Changed(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
