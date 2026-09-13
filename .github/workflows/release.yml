@@ -20,9 +20,14 @@ jobs:
       with:
         dotnet-version: '8.0.x'
 
-    - name: Build and Publish
+    - name: Build and Publish (For Installer)
       run: |
         dotnet publish -c Release -r win-x64 --self-contained false -o .\publish\FoldVision
+
+    - name: Build Portable Version
+      run: |
+        dotnet publish -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -o .\publish\Portable
+        mv .\publish\Portable\FoldVision.exe .\publish\FoldVision_Portable.exe
 
     - name: Compile Inno Setup Installer
       run: iscc installer.iss
@@ -30,7 +35,9 @@ jobs:
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v1
       with:
-        files: Output/FoldVision_Setup.exe
+        files: |
+          Output/FoldVision_Setup.exe
+          publish/FoldVision_Portable.exe
         generate_release_notes: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

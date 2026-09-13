@@ -8,13 +8,19 @@ if exist "publish\FoldVision" (
     rmdir /s /q "publish\FoldVision"
 )
 
-:: Compilar la aplicacion
+:: Compilar la aplicacion (Para Instalador)
 dotnet publish -c Release -r win-x64 --self-contained false -o .\publish\FoldVision
+
+:: Compilar la aplicacion Portable (Unico Archivo)
+dotnet publish -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -o .\publish\Portable
+move /y ".\publish\Portable\FoldVision.exe" ".\publish\FoldVision_Portable.exe" >nul
+rmdir /s /q ".\publish\Portable"
 
 echo.
 echo ==============================================
 echo  Compilacion exitosa.
-echo  Tus archivos estan en: publish\FoldVision\
+echo  Archivos base para instalador: publish\FoldVision\
+echo  Ejecutable Portable:           publish\FoldVision_Portable.exe
 echo ==============================================
 echo.
 

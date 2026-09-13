@@ -25,7 +25,11 @@
 - **Personalizable:** Incluye una interfaz (accesible mediante el icono oculto de la barra de tareas) para personalizar el desenfoque (blur), profundidad, sombras y límites de activación.
 
 ### ⚙️ Cómo empezar
-Puedes descargar el instalador listo para usar desde la [sección de Releases en GitHub](https://github.com/beymans-code/fold-vision-windows/releases). *(Importante: Al ser un instalador (.exe) sin firma digital, el Control Inteligente de Aplicaciones o SmartScreen de Windows podría mostrar una advertencia. Para evitarlo, haz **clic derecho** en el archivo descargado > **Propiedades** > marca la casilla **Desbloquear** en la parte inferior y haz clic en Aplicar antes de ejecutarlo).*
+Puedes descargar la versión que prefieras desde la [sección de Releases en GitHub](https://github.com/beymans-code/fold-vision-windows/releases):
+- **Instalador (`FoldVision_Setup.exe`):** Recomendado para la mayoría de usuarios.
+- **Versión Portable (`FoldVision_Portable.exe`):** Un único archivo ejecutable que no requiere instalación.
+
+*(Importante: Al ser archivos sin firma digital, el Control Inteligente de Aplicaciones o SmartScreen de Windows podría mostrar una advertencia. Para evitarlo, haz **clic derecho** en el archivo descargado > **Propiedades** > marca la casilla **Desbloquear** en la parte inferior y haz clic en Aplicar antes de ejecutarlo).*
 
 Si prefieres descargar el código fuente y compilarlo tú mismo, es muy fácil:
 1. Asegúrate de tener instalado el SDK de **.NET 8**.
@@ -54,7 +58,11 @@ Este proyecto es completamente de código abierto y se distribuye bajo la **Lice
 - **Customizable:** Comes with a GUI (accessible from the system tray) to tweak the blur strength, depth, shadowing, and activation limits.
 
 ### ⚙️ Getting Started
-You can download the latest ready-to-use installer from the [GitHub Releases section](https://github.com/beymans-code/fold-vision-windows/releases). *(Important: Since this is an unsigned installer (.exe) file, Windows SmartScreen or Smart App Control might show a warning. To prevent this, **right-click** the downloaded file > **Properties** > check the **Unblock** box at the bottom and click Apply before running it).*
+You can download your preferred version from the [GitHub Releases section](https://github.com/beymans-code/fold-vision-windows/releases):
+- **Installer (`FoldVision_Setup.exe`):** Recommended for most users.
+- **Portable Version (`FoldVision_Portable.exe`):** A single executable file that requires no installation.
+
+*(Important: Since these are unsigned files, Windows SmartScreen or Smart App Control might show a warning. To prevent this, **right-click** the downloaded file > **Properties** > check the **Unblock** box at the bottom and click Apply before running it).*
 
 If you prefer to download the source code and build it yourself, it's very straightforward:
 1. Make sure you have the **.NET 8** SDK installed.
