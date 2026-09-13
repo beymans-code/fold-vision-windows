@@ -23,3 +23,6 @@ Name: "{autodesktop}\FoldVision"; Filename: "{app}\FoldVision.exe"; Tasks: deskt
 
 [Run]
 Filename: "{app}\FoldVision.exe"; Description: "{cm:LaunchProgram,FoldVision}"; Flags: nowait postinstall skipifsilent
+
+[Registry]
+Root: HKCU; Subkey: "SOFTWARE\Microsoft\Windows\CurrentVersion\Run"; ValueType: none; ValueName: "FoldVision"; Flags: uninsdeletevalue
