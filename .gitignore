@@ -1,0 +1,17 @@
+## Visual Studio / .NET Core
+[Bb]in/
+[Oo]bj/
+.vs/
+*.user
+*.suo
+*.sln.docstates
+*.userosscache
+*.suo
+*.userprefs
+
+## FoldVision Specific
+crash.log
+
+## OS Generated
+.DS_Store
+Thumbs.db

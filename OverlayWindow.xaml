@@ -1,0 +1,22 @@
+<Window x:Class="FoldVision.OverlayWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Topmost="True"
+        ShowInTaskbar="False"
+        WindowState="Maximized"
+        ResizeMode="NoResize">
+    <Grid>
+        <!--
+            D3DImage: bridge entre D3D11 render-target y WPF.
+            El GpuRenderer escribe directamente en la textura D3D11 compartida;
+            D3DImage la presenta sin copia por CPU.
+        -->
+        <Image x:Name="GpuImage" Stretch="Fill" />
+        <TextBlock x:Name="DebugText" Foreground="Red" FontSize="48" FontWeight="Bold" 
+                   HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50"
+                   IsHitTestVisible="False" Visibility="Collapsed" />
+    </Grid>
+</Window>
