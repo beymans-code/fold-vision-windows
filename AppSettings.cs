@@ -34,6 +34,9 @@ namespace FoldVision
         /// <summary>Modo de captura: "Static" (captura única) o "Live" (60 FPS real-time).</summary>
         public static string AppMode          = "Static";
 
+        /// <summary>Idioma de la aplicación: "es" o "en".</summary>
+        public static string Language         = "es";
+
         private static string GetConfigPath()
         {
             // Para hacer la aplicación verdaderamente portable, guardamos los ajustes
@@ -60,6 +63,7 @@ namespace FoldVision
                         ShowDebugAngle = data.ShowDebugAngle;
                         DisableInTabletMode = data.DisableInTabletMode;
                         AppMode = data.AppMode ?? "Static";
+                        Language = data.Language ?? "es";
                     }
                 }
                 catch { /* Si hay error, se quedan los por defecto */ }
@@ -79,7 +83,8 @@ namespace FoldVision
                     AngleMax = AngleMax,
                     ShowDebugAngle = ShowDebugAngle,
                     DisableInTabletMode = DisableInTabletMode,
-                    AppMode = AppMode
+                    AppMode = AppMode,
+                    Language = Language
                 };
                 string json = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
                 File.WriteAllText(GetConfigPath(), json);
@@ -98,5 +103,6 @@ namespace FoldVision
         public bool ShowDebugAngle { get; set; } = false;
         public bool DisableInTabletMode { get; set; } = true;
         public string AppMode { get; set; } = "Static";
+        public string Language { get; set; } = "es";
     }
 }

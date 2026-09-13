@@ -1,7 +1,7 @@
 <Window x:Class="FoldVision.SettingsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="FoldVision — Ajustes" Height="500" Width="440"
+        Title="{DynamicResource SettingsWinTitle}" Height="550" Width="440"
         Topmost="True" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Background="#1E1E2E" Foreground="White" FontFamily="Segoe UI">
@@ -25,14 +25,26 @@
     </Window.Resources>
 
     <StackPanel Margin="24">
-        <TextBlock Text="Ajustes del efecto" FontSize="16" FontWeight="Bold"
+        <TextBlock Text="{DynamicResource SettingsHeader}" FontSize="16" FontWeight="Bold"
                    Foreground="#CBA6F7" Margin="0,0,0,8"/>
+        <Separator Background="#313244" Margin="0,0,0,4"/>
+        
+        <!-- Idioma -->
+        <Grid Margin="0,0,0,10">
+            <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <TextBlock Style="{StaticResource Label}" Text="{DynamicResource LanguageHeader}" Margin="0,4,0,0"/>
+            <ComboBox x:Name="LanguageCombo" Grid.Column="1" SelectionChanged="Language_Changed" 
+                      Background="#1E1E2E" Foreground="Black" Width="100">
+                <ComboBoxItem Content="{DynamicResource LangSpanish}" Tag="es"/>
+                <ComboBoxItem Content="{DynamicResource LangEnglish}" Tag="en"/>
+            </ComboBox>
+        </Grid>
         <Separator Background="#313244" Margin="0,0,0,4"/>
 
         <!-- Profundidad de perspectiva -->
         <Grid>
             <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
-            <TextBlock Style="{StaticResource Label}" Text="Profundidad de perspectiva"/>
+            <TextBlock Style="{StaticResource Label}" Text="{DynamicResource PerspectiveDepth}"/>
             <TextBlock x:Name="DepthValue" Grid.Column="1" Style="{StaticResource Value}" VerticalAlignment="Bottom" Margin="0,14,0,2"/>
         </Grid>
         <Slider x:Name="DepthSlider" Minimum="0.5" Maximum="5.0" SmallChange="0.1" LargeChange="0.5"
@@ -41,7 +53,7 @@
         <!-- Altura máxima (stretchMult) -->
         <Grid>
             <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
-            <TextBlock Style="{StaticResource Label}" Text="Altura máxima de la imagen"/>
+            <TextBlock Style="{StaticResource Label}" Text="{DynamicResource MaxImageHeight}"/>
             <TextBlock x:Name="StretchValue" Grid.Column="1" Style="{StaticResource Value}" VerticalAlignment="Bottom" Margin="0,14,0,2"/>
         </Grid>
         <Slider x:Name="StretchSlider" Minimum="0.0" Maximum="4.0" SmallChange="0.1" LargeChange="0.5"
@@ -50,14 +62,14 @@
         <!-- Nivel de blur -->
         <Grid>
             <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
-            <TextBlock Style="{StaticResource Label}" Text="Intensidad del desenfoque"/>
+            <TextBlock Style="{StaticResource Label}" Text="{DynamicResource BlurIntensity}"/>
             <TextBlock x:Name="BlurValue" Grid.Column="1" Style="{StaticResource Value}" VerticalAlignment="Bottom" Margin="0,14,0,2"/>
         </Grid>
         <Slider x:Name="BlurSlider" Minimum="0.0" Maximum="2.5" SmallChange="0.05" LargeChange="0.25"
                 ValueChanged="BlurSlider_Changed"/>
 
         <!-- Rango de activación -->
-        <TextBlock Style="{StaticResource Label}" Text="Ángulo de inicio del efecto"/>
+        <TextBlock Style="{StaticResource Label}" Text="{DynamicResource AngleStart}"/>
         <Grid>
             <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
             <Slider x:Name="AngleStartSlider" Minimum="60" Maximum="130" SmallChange="1" LargeChange="5"
@@ -65,7 +77,7 @@
             <TextBlock x:Name="AngleStartValue" Grid.Column="1" Style="{StaticResource Value}" VerticalAlignment="Center"/>
         </Grid>
 
-        <TextBlock Style="{StaticResource Label}" Text="Ángulo de efecto máximo"/>
+        <TextBlock Style="{StaticResource Label}" Text="{DynamicResource AngleMax}"/>
         <Grid>
             <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
             <Slider x:Name="AngleMaxSlider" Minimum="100" Maximum="180" SmallChange="1" LargeChange="5"
@@ -74,24 +86,24 @@
         </Grid>
 
         <!-- Modo de la aplicación -->
-        <TextBlock Style="{StaticResource Label}" Text="Modo de Captura" Margin="0,16,0,4"/>
+        <TextBlock Style="{StaticResource Label}" Text="{DynamicResource CaptureMode}" Margin="0,16,0,4"/>
         <ComboBox x:Name="AppModeCombo" SelectionChanged="AppMode_Changed" 
                   Background="#1E1E2E" Foreground="Black" Margin="0,0,0,16">
-            <ComboBoxItem Content="Modo Estático (Bajo consumo)"/>
-            <ComboBoxItem Content="Modo Live (Tiempo real - Backdrop)"/>
+            <ComboBoxItem Content="{DynamicResource CaptureModeStatic}"/>
+            <ComboBoxItem Content="{DynamicResource CaptureModeLive}"/>
         </ComboBox>
 
-        <CheckBox x:Name="chkTabletMode" Content="Desactivar en modo tableta (0 grados)" 
+        <CheckBox x:Name="chkTabletMode" Content="{DynamicResource DisableTabletMode}" 
                   Foreground="#CDD6F4" Checked="TabletMode_Changed" Unchecked="TabletMode_Changed"/>
 
-        <CheckBox x:Name="AutoStartCheckBox" Content="Iniciar con Windows" 
+        <CheckBox x:Name="AutoStartCheckBox" Content="{DynamicResource AutoStart}" 
                   Foreground="#CDD6F4" Margin="0,8,0,0" Checked="AutoStart_Changed" Unchecked="AutoStart_Changed"/>
         
-        <CheckBox x:Name="ShowDebugCheckBox" Content="Mostrar ángulo en pantalla (OSD)" 
+        <CheckBox x:Name="ShowDebugCheckBox" Content="{DynamicResource ShowOSD}" 
                   Foreground="#CDD6F4" Margin="0,8,0,0" Checked="ShowDebug_Changed" Unchecked="ShowDebug_Changed"/>
 
         <!-- Botón Restablecer -->
-        <Button Content="Restablecer valores por defecto" Margin="0,20,0,0" Padding="12,6"
+        <Button Content="{DynamicResource ResetDefaults}" Margin="0,20,0,0" Padding="12,6"
                 HorizontalAlignment="Right" Click="Reset_Click"
                 Background="#313244" Foreground="#CDD6F4" BorderBrush="#45475A"/>
     </StackPanel>

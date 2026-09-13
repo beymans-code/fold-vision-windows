@@ -24,6 +24,7 @@ namespace FoldVision
             ShowDebugCheckBox.IsChecked = AppSettings.ShowDebugAngle;
             chkTabletMode.IsChecked     = AppSettings.DisableInTabletMode;
             AppModeCombo.SelectedIndex  = AppSettings.AppMode == "Live" ? 1 : 0;
+            LanguageCombo.SelectedIndex = AppSettings.Language == "en" ? 1 : 0;
 
             // Verificar si el inicio automático está activo en el registro
             using (RegistryKey? key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
@@ -151,6 +152,17 @@ namespace FoldVision
             if (_isInitializing) return;
             AppSettings.AppMode = AppModeCombo.SelectedIndex == 1 ? "Live" : "Static";
             AppSettings.Save();
+        }
+
+        private void Language_Changed(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (_isInitializing) return;
+            if (LanguageCombo.SelectedItem is ComboBoxItem item && item.Tag is string lang)
+            {
+                AppSettings.Language = lang;
+                AppSettings.Save();
+                App.ChangeLanguage(lang);
+            }
         }
     }
 }

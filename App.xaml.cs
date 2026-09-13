@@ -15,15 +15,16 @@ namespace FoldVision
                 System.IO.File.WriteAllText("crash.log", args.ExceptionObject.ToString());
 
             AppSettings.Load();
+            ChangeLanguage(AppSettings.Language);
 
             _overlay = new OverlayWindow { Opacity = 0 };
             _overlay.Show();
 
             var menu = new System.Windows.Forms.ContextMenuStrip();
-            menu.Items.Add("🔧 Debug Sensor", null, (s, args) => new DebugWindow().Show());
-            menu.Items.Add("⚙️ Ajustes del efecto", null, (s, args) => new SettingsWindow().Show());
+            menu.Items.Add(GetResourceString("TrayDebugSensor"), null, (s, args) => new DebugWindow().Show());
+            menu.Items.Add(GetResourceString("TraySettings"), null, (s, args) => new SettingsWindow().Show());
             menu.Items.Add("-");
-            menu.Items.Add("❌ Salir", null, (s, args) => Shutdown());
+            menu.Items.Add(GetResourceString("TrayExit"), null, (s, args) => Shutdown());
 
             System.Drawing.Icon appIcon;
             using (var stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("FoldVision.FV.ico"))
@@ -52,13 +53,32 @@ namespace FoldVision
             if (!sensorAvailable)
             {
                 System.Windows.MessageBox.Show(
-                    "FoldVision no es compatible con este dispositivo.\n\nSe requiere un sensor Inclinómetro de hardware integrado (común en portátiles 2-en-1 o plegables) para detectar el ángulo de la pantalla.", 
-                    "Hardware Incompatible", 
+                    GetResourceString("HardwareIncompatibleMsg"), 
+                    GetResourceString("HardwareIncompatibleTitle"), 
                     System.Windows.MessageBoxButton.OK, 
                     System.Windows.MessageBoxImage.Error);
                 Shutdown();
                 return;
             }
+        }
+
+        public static void ChangeLanguage(string langCode)
+        {
+            var dict = new System.Windows.ResourceDictionary();
+            dict.Source = new Uri($"Locales/{langCode}.xaml", UriKind.Relative);
+
+            // Reemplazar el diccionario actual
+            var appDicts = Current.Resources.MergedDictionaries;
+            if (appDicts.Count > 0)
+            {
+                appDicts.Clear();
+            }
+            appDicts.Add(dict);
+        }
+
+        public static string GetResourceString(string key)
+        {
+            return Current.TryFindResource(key) as string ?? key;
         }
 
         private void OnFoldFactorChanged(object? sender, float foldFactor)

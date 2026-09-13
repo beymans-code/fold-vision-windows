@@ -1,0 +1,47 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!-- Tray Menu -->
+    <system:String x:Key="TrayDebugSensor">🔧 Debug Sensor</system:String>
+    <system:String x:Key="TraySettings">⚙️ Ajustes del efecto</system:String>
+    <system:String x:Key="TrayExit">❌ Salir</system:String>
+
+    <!-- App / Startup -->
+    <system:String x:Key="HardwareIncompatibleTitle">Hardware Incompatible</system:String>
+    <system:String x:Key="HardwareIncompatibleMsg">FoldVision no es compatible con este dispositivo.&#x0a;&#x0a;Se requiere un sensor Inclinómetro de hardware integrado (común en portátiles 2-en-1 o plegables) para detectar el ángulo de la pantalla.</system:String>
+
+    <!-- Settings Window -->
+    <system:String x:Key="SettingsWinTitle">FoldVision — Ajustes</system:String>
+    <system:String x:Key="SettingsHeader">Ajustes del efecto</system:String>
+    
+    <system:String x:Key="PerspectiveDepth">Profundidad de perspectiva</system:String>
+    <system:String x:Key="MaxImageHeight">Altura máxima de la imagen</system:String>
+    <system:String x:Key="BlurIntensity">Intensidad del desenfoque</system:String>
+    
+    <system:String x:Key="AngleStart">Ángulo de inicio del efecto</system:String>
+    <system:String x:Key="AngleMax">Ángulo de efecto máximo</system:String>
+
+    <system:String x:Key="CaptureMode">Modo de Captura</system:String>
+    <system:String x:Key="CaptureModeStatic">Modo Estático (Bajo consumo)</system:String>
+    <system:String x:Key="CaptureModeLive">Modo Live (Tiempo real - Overlay)</system:String>
+
+    <system:String x:Key="DisableTabletMode">Desactivar en modo tableta (0 grados)</system:String>
+    <system:String x:Key="AutoStart">Iniciar con Windows</system:String>
+    <system:String x:Key="ShowOSD">Mostrar ángulo en pantalla (OSD)</system:String>
+    <system:String x:Key="ResetDefaults">Restablecer valores por defecto</system:String>
+
+    <!-- Debug Window -->
+    <system:String x:Key="DebugSimulateAngle">Simular ángulo de bisagra</system:String>
+    <system:String x:Key="DebugAngleRange">90° = abierta (sin efecto)   →   175° = cerrada (blur máximo)</system:String>
+    <system:String x:Key="DebugCurrentAngle">Ángulo actual:</system:String>
+    
+    <!-- Code strings -->
+    <system:String x:Key="AutoStartEnabled">FoldVision iniciado automáticamente.</system:String>
+    <system:String x:Key="AutoStartDisabled">FoldVision eliminado del inicio automático.</system:String>
+    
+    <system:String x:Key="LanguageHeader">Idioma / Language</system:String>
+    <system:String x:Key="LangSpanish">Español</system:String>
+    <system:String x:Key="LangEnglish">English</system:String>
+
+</ResourceDictionary>
