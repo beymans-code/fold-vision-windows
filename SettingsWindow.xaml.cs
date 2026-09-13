@@ -35,6 +35,13 @@ namespace FoldVision
                 }
             }
 
+            // Ocultar botón de desinstalación si es la versión portable
+            string appDir = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule?.FileName ?? "") ?? "";
+            if (!System.IO.File.Exists(System.IO.Path.Combine(appDir, "unins000.exe")))
+            {
+                UninstallBtn.Visibility = Visibility.Collapsed;
+            }
+
             UpdateLabels();
             _isInitializing = false;
         }

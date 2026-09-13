@@ -104,7 +104,7 @@
 
         <!-- Botones inferiores -->
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
-            <Button Content="{DynamicResource UninstallButton}" Margin="0,0,10,0" Padding="12,6"
+            <Button x:Name="UninstallBtn" Content="{DynamicResource UninstallButton}" Margin="0,0,10,0" Padding="12,6"
                     Click="Uninstall_Click"
                     Background="#313244" Foreground="#F38BA8" BorderBrush="#45475A"/>
             <Button Content="{DynamicResource ResetDefaults}" Padding="12,6"
