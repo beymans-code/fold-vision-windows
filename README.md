@@ -22,14 +22,16 @@
 - **Dos modos de funcionamiento:**
   - **Modo Estático (Bajo consumo)**
   - **Modo Live (Tiempo real - Overlay)**
-- **Personalizable:** Incluye una interfaz (accesible mediante el icono oculto de la barra de tareas) para personalizar el desenfoque (blur), intensidad, sombras y límites de ángulo.
+- **Personalizable:** Incluye una interfaz (accesible mediante el icono oculto de la barra de tareas) para personalizar el desenfoque (blur), profundidad, sombras y límites de activación.
 
 ### ⚙️ Cómo empezar
-Si descargas el código fuente y quieres compilarlo tú mismo, es muy fácil:
+Puedes descargar la última versión lista para usar desde la [sección de Releases en GitHub](https://github.com/beymans-code/fold-vision-windows/releases). *(Importante: Al ser un archivo .exe sin firma digital, el Control Inteligente de Aplicaciones o SmartScreen de Windows podría bloquearlo. Para evitarlo, haz **clic derecho** en el archivo descargado > **Propiedades** > marca la casilla **Desbloquear** en la parte inferior y haz clic en Aplicar).*
+
+Si prefieres descargar el código fuente y compilarlo tú mismo, es muy fácil:
 1. Asegúrate de tener instalado el SDK de **.NET 8**.
 2. Haz doble clic en el script `build_release.bat`.
-3. Esto generará la carpeta `publish\FoldVision_Unico_Archivo\` con un único archivo `.exe` compilado y listo para llevar en un USB.
-4. Al abrir `FoldVision.exe`, el programa se ocultará en la barra de tareas (abajo a la derecha). Haz doble clic en su icono `FV` para abrir los ajustes y configurar el inicio automático.
+3. Esto generará la carpeta `publish\FoldVision_Unico_Archivo\` con el archivo `.exe` compilado.
+4. Al abrir `FoldVision.exe`, el programa se ocultará en la barra de tareas (abajo a la derecha). Haz doble clic en el icono <img src="FV.svg" width="20" valign="bottom"> `FoldVision` para abrir los ajustes y configurar el inicio automático.
 
 ### 📜 Licencia
 Este proyecto es completamente de código abierto y se distribuye bajo la **Licencia Pública General GNU (GPLv3)**. Tienes total libertad para estudiarlo, modificarlo y compartir tus mejoras. Consulta el archivo `LICENSE` adjunto para más información.
@@ -48,14 +50,16 @@ Este proyecto es completamente de código abierto y se distribuye bajo la **Lice
 - **Two operating modes:**
   - **Static Mode (Low power)**
   - **Live Mode (Real-time - Overlay)**
-- **Customizable:** Comes with a GUI (accessible from the system tray) to tweak the blur strength, depth, shadowing, and angle limits.
+- **Customizable:** Comes with a GUI (accessible from the system tray) to tweak the blur strength, depth, shadowing, and activation limits.
 
 ### ⚙️ Getting Started
-If you download the source code and want to build it yourself, it's very straightforward:
+You can download the latest ready-to-use version from the [GitHub Releases section](https://github.com/beymans-code/fold-vision-windows/releases). *(Important: Since this is an unsigned .exe file, Windows SmartScreen or Smart App Control might block it. To prevent this, **right-click** the downloaded file > **Properties** > check the **Unblock** box at the bottom and click Apply).*
+
+If you prefer to download the source code and build it yourself, it's very straightforward:
 1. Make sure you have the **.NET 8** SDK installed.
 2. Double-click the `build_release.bat` script.
-3. This will generate a `publish\FoldVision_Unico_Archivo\` folder containing the compiled, ready-to-go single-file `.exe`.
-4. When you open `FoldVision.exe`, it will hide in your system tray (bottom right corner). Double-click its `FV` icon to open the settings and enable auto-start if you wish.
+3. This will generate a `publish\FoldVision_Unico_Archivo\` folder containing the compiled `.exe` file.
+4. When you open `FoldVision.exe`, it will hide in your system tray (bottom right corner). Double-click the <img src="FV.svg" width="20" valign="bottom"> `FoldVision` icon to open the settings and enable auto-start if you wish.
 
 ### 📜 License
 This project is completely open source and is distributed under the **GNU General Public License (GPLv3)**. You have absolute freedom to study, modify, and share your improvements. Please see the attached `LICENSE` file for more details.
