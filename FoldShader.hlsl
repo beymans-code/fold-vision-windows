@@ -163,8 +163,8 @@ float4 PS(VSOut input) : SV_TARGET
     // A medida que la tapa se cierra (turn -> 1), la "sombra" desciende 
     // desde arriba (1.0) hacia abajo (0.0).
     float shadowFront = 1.0 - turn;
-    float shadowAlpha = smoothstep(shadowFront - 0.3, shadowFront + 0.3, dist_img);
-    color  = lerp(color, DARK, shadowAlpha * 0.95);
+    float shadowAlpha = smoothstep(shadowFront - 0.15, shadowFront + 0.2, dist_img);
+    color  = lerp(color, DARK, shadowAlpha * 0.98);
     
     // ── 6. Suavizado de bordes (Difuminado en Alpha) ─────────────────────
     // Usamos el Alpha difuminado para fundir los bordes de la pantalla virtual 
