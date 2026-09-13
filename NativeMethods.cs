@@ -8,6 +8,7 @@ namespace FoldVision
         public const int GWL_EXSTYLE = -20;
         public const int WS_EX_LAYERED  = 0x80000;
         public const int WS_EX_TRANSPARENT = 0x20;
+        public const int WS_EX_TOOLWINDOW = 0x80;
 
         public const int WM_POWERBROADCAST      = 0x0218;
         public const int PBT_POWERSETTINGCHANGE = 0x8013;

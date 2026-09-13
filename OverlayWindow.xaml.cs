@@ -38,7 +38,7 @@ namespace FoldVision
             var hwnd    = new WindowInteropHelper(this).Handle;
             int exStyle = NativeMethods.GetWindowLong(hwnd, NativeMethods.GWL_EXSTYLE);
             NativeMethods.SetWindowLong(hwnd, NativeMethods.GWL_EXSTYLE,
-                exStyle | NativeMethods.WS_EX_TRANSPARENT | NativeMethods.WS_EX_LAYERED);
+                exStyle | NativeMethods.WS_EX_TRANSPARENT | NativeMethods.WS_EX_LAYERED | NativeMethods.WS_EX_TOOLWINDOW);
 
             // Evitar que nuestra ventana sea capturada por DXGI (Droste effect)
             NativeMethods.SetWindowDisplayAffinity(hwnd, NativeMethods.WDA_EXCLUDEFROMCAPTURE);
@@ -58,14 +58,8 @@ namespace FoldVision
 
             _renderer = new GpuRenderer(w, h);
             
-            if (AppSettings.AppMode == "Live")
-            {
-                _liveCapture = new LiveCaptureService(_renderer.Device);
-            }
-            else
-            {
-                _staticCapture = new StaticCaptureService(_renderer.Device);
-            }
+            // Los servicios de captura se inicializan bajo demanda (Lazy Load)
+            // para no consumir recursos (GPU/DWM) cuando la app arranca inactiva.
 
             _d3dImage = new D3DImage();
             _d3dImage.Lock();
@@ -91,12 +85,23 @@ namespace FoldVision
 
         private void StartAnimTimer()
         {
-            _animTimer = new DispatcherTimer(DispatcherPriority.Render)
+            if (_animTimer == null)
             {
-                Interval = TimeSpan.FromMilliseconds(16)
-            };
-            _animTimer.Tick += OnAnimTick;
-            _animTimer.Start();
+                _animTimer = new DispatcherTimer(DispatcherPriority.Render)
+                {
+                    Interval = TimeSpan.FromMilliseconds(16)
+                };
+                _animTimer.Tick += OnAnimTick;
+            }
+            if (!_animTimer.IsEnabled)
+            {
+                _animTimer.Start();
+            }
+        }
+
+        private void StopAnimTimer()
+        {
+            _animTimer?.Stop();
         }
 
         private void OnAnimTick(object? sender, EventArgs e)
@@ -132,6 +137,11 @@ namespace FoldVision
 
             if (AppSettings.AppMode == "Live")
             {
+                if (_liveCapture == null && (_curTurn > 0.01f || isAnimating))
+                {
+                    _liveCapture = new LiveCaptureService(_renderer.Device);
+                }
+
                 if (_curTurn > 0.01f || isAnimating)
                 {
                     _liveCapture?.CaptureScreen();
@@ -160,11 +170,17 @@ namespace FoldVision
             if (!isAnimating && _curTurn == 0f && Opacity > 0)
             {
                 Opacity = 0;
+                StopAnimTimer();
                 
                 if (AppSettings.AppMode == "Static")
                 {
                     _staticCapture?.Dispose();
                     _staticCapture = new StaticCaptureService(_renderer.Device);
+                }
+                else if (AppSettings.AppMode == "Live")
+                {
+                    _liveCapture?.Dispose();
+                    _liveCapture = null;
                 }
             }
         }
@@ -179,30 +195,39 @@ namespace FoldVision
             {
                 _staticCapture?.Dispose();
                 _staticCapture = null;
-                if (_liveCapture == null)
-                    _liveCapture = new LiveCaptureService(_renderer.Device);
             }
             else
             {
                 _liveCapture?.Dispose();
                 _liveCapture = null;
-                if (_staticCapture == null)
-                    _staticCapture = new StaticCaptureService(_renderer.Device);
             }
         }
 
         /// <summary>Captura la pantalla y muestra el overlay.</summary>
         public void PrepareCapture()
         {
+            StartAnimTimer();
             if (AppSettings.AppMode == "Static")
             {
+                if (_staticCapture == null && _renderer != null)
+                    _staticCapture = new StaticCaptureService(_renderer.Device);
+
                 if (_staticCapture != null && _staticCapture.LatestFrame == null)
                     _staticCapture.CaptureScreen();
+            }
+            else if (AppSettings.AppMode == "Live")
+            {
+                if (_liveCapture == null && _renderer != null)
+                    _liveCapture = new LiveCaptureService(_renderer.Device);
             }
         }
 
         /// <summary>Actualiza el factor de pliegue objetivo.</summary>
-        public void ApplyEffect(float foldFactor) => _targetFold = foldFactor;
+        public void ApplyEffect(float foldFactor)
+        {
+            _targetFold = foldFactor;
+            StartAnimTimer();
+        }
 
         public void UpdateAngleDisplay(float angleDegrees)
         {

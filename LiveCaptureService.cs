@@ -149,6 +149,12 @@ namespace FoldVision
             catch { }
         }
 
+        public void ClearMemory()
+        {
+            LatestFrame?.Dispose();
+            LatestFrame = null;
+        }
+
         public void Dispose()
         {
             try { _deskDupl?.ReleaseFrame(); } catch { }
