@@ -27,8 +27,8 @@ namespace FoldVision
                 var result = adapter.EnumOutputs(0, out var output);
                 if (result.Failure) 
                 {
-                    System.IO.File.AppendAllText("crash.log", $"EnumOutputs falló: {result.Code}\n");
-                    return;
+                try { System.IO.File.AppendAllText(AppSettings.GetCrashLogPath(), $"EnumOutputs falló: {result.Code}\n"); } catch { }
+                return;
                 }
                 using var output1 = output.QueryInterface<IDXGIOutput1>();
                 
@@ -36,7 +36,7 @@ namespace FoldVision
             }
             catch (Exception ex)
             {
-                System.IO.File.AppendAllText("crash.log", $"Error InitDuplication: {ex.Message}\n");
+                try { System.IO.File.AppendAllText(AppSettings.GetCrashLogPath(), $"Error InitDuplication: {ex.Message}\n"); } catch { }
                 _deskDupl = null;
             }
         }
@@ -107,7 +107,7 @@ namespace FoldVision
             }
             catch (Exception ex)
             {
-                System.IO.File.AppendAllText("crash.log", $"Error CaptureScreen: {ex.Message}\n");
+                try { System.IO.File.AppendAllText(AppSettings.GetCrashLogPath(), $"Error CaptureScreen: {ex.Message}\n"); } catch { }
                 try { _deskDupl?.ReleaseFrame(); } catch { }
             }
         }

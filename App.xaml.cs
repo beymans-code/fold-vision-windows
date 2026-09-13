@@ -12,7 +12,9 @@ namespace FoldVision
         private void Application_Startup(object sender, WpfStartupEventArgs e)
         {
             AppDomain.CurrentDomain.UnhandledException += (s, args) =>
-                System.IO.File.WriteAllText("crash.log", args.ExceptionObject.ToString());
+            {
+                try { System.IO.File.WriteAllText(AppSettings.GetCrashLogPath(), args.ExceptionObject.ToString()); } catch { }
+            };
 
             AppSettings.Load();
             ChangeLanguage(AppSettings.Language);

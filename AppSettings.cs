@@ -37,14 +37,12 @@ namespace FoldVision
         /// <summary>Idioma de la aplicación: "es" o "en".</summary>
         public static string Language         = "es";
 
-        private static string GetConfigPath()
+        public static string GetAppDir()
         {
             string baseDir = AppContext.BaseDirectory;
             string programFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
             string programFilesX86 = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
 
-            // Si la aplicación está instalada en Archivos de Programa, usamos AppData
-            // ya que no hay permisos de escritura en la carpeta de instalación.
             if (baseDir.StartsWith(programFiles, StringComparison.OrdinalIgnoreCase) ||
                 baseDir.StartsWith(programFilesX86, StringComparison.OrdinalIgnoreCase))
             {
@@ -54,11 +52,20 @@ namespace FoldVision
                 {
                     Directory.CreateDirectory(configDir);
                 }
-                return Path.Combine(configDir, "settings.json");
+                return configDir;
             }
 
-            // Para la versión portable, lo guardamos en la misma carpeta
-            return Path.Combine(baseDir, "settings.json");
+            return baseDir;
+        }
+
+        private static string GetConfigPath()
+        {
+            return Path.Combine(GetAppDir(), "settings.json");
+        }
+
+        public static string GetCrashLogPath()
+        {
+            return Path.Combine(GetAppDir(), "crash.log");
         }
 
         public static void Load()
