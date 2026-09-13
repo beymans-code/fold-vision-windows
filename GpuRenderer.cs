@@ -121,12 +121,12 @@ namespace FoldVision
                 }
             }
 
-            Compiler.Compile(src, null, null, "VS", "FoldShader.hlsl", "vs_5_0", ShaderFlags.OptimizationLevel3,
+            Compiler.Compile(src, null!, null!, "VS", "FoldShader.hlsl", "vs_5_0", ShaderFlags.OptimizationLevel3,
                              out var vsBlob, out var vsErr);
             if (vsBlob == null)
                 throw new Exception($"Error compilando VS: {vsErr?.AsString()}");
 
-            Compiler.Compile(src, null, null, "PS", "FoldShader.hlsl", "ps_5_0", ShaderFlags.OptimizationLevel3,
+            Compiler.Compile(src, null!, null!, "PS", "FoldShader.hlsl", "ps_5_0", ShaderFlags.OptimizationLevel3,
                              out var psBlob, out var psErr);
             if (psBlob == null)
                 throw new Exception($"Error compilando PS: {psErr?.AsString()}");
@@ -203,6 +203,7 @@ namespace FoldVision
             _ctx.PSSetSampler(0, _sampler);
 
             // 4. Setup render target + viewport
+            if (_rtv == null) return;
             _ctx.OMSetRenderTargets(_rtv);
             _ctx.RSSetViewport(new Viewport(0, 0, _width, _height));
 

@@ -6,8 +6,8 @@ namespace FoldVision
 {
     internal static class D3D9Interop
     {
-        private static IDirect3D9Ex s_d3d9;
-        private static IDirect3DDevice9Ex s_device9;
+        private static IDirect3D9Ex? s_d3d9;
+        private static IDirect3DDevice9Ex? s_device9;
 
         private static void EnsureDevice9()
         {
@@ -45,7 +45,7 @@ namespace FoldVision
             IntPtr pShared = sharedHandle;
             
             // Creamos la textura usando el handle compartido
-            var tex = s_device9.CreateTexture(
+            var tex = s_device9!.CreateTexture(
                 (uint)width, (uint)height, 
                 1, 
                 Usage.RenderTarget, 

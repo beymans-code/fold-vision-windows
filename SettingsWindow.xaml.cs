@@ -26,7 +26,7 @@ namespace FoldVision
             AppModeCombo.SelectedIndex  = AppSettings.AppMode == "Live" ? 1 : 0;
 
             // Verificar si el inicio automático está activo en el registro
-            using (RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
+            using (RegistryKey? key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
             {
                 if (key != null)
                 {
@@ -114,7 +114,7 @@ namespace FoldVision
         private void AutoStart_Changed(object sender, RoutedEventArgs e)
         {
             if (_isInitializing) return;
-            using (RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
+            using (RegistryKey? key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
             {
                 if (key != null)
                 {
