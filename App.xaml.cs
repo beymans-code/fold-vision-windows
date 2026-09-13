@@ -74,6 +74,23 @@ namespace FoldVision
                 appDicts.Clear();
             }
             appDicts.Add(dict);
+
+            if (Current is App appInstance)
+            {
+                appInstance.UpdateTrayMenuText();
+            }
+        }
+
+        private void UpdateTrayMenuText()
+        {
+            if (_notifyIcon?.ContextMenuStrip == null) return;
+            var items = _notifyIcon.ContextMenuStrip.Items;
+            if (items.Count >= 4)
+            {
+                items[0].Text = GetResourceString("TrayDebugSensor");
+                items[1].Text = GetResourceString("TraySettings");
+                items[3].Text = GetResourceString("TrayExit");
+            }
         }
 
         public static string GetResourceString(string key)
