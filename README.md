@@ -19,6 +19,9 @@
 ### 🚀 Características Principales
 - **Efecto D3D11 Acelerado por Hardware:** Renderizado ultrarrápido a través de GPU que garantiza 0 latencia y no consume casi recursos del procesador (CPU).
 - **Sensor Inteligente Integrado:** Detecta automáticamente el grado de inclinación de la bisagra nativamente mediante el Inclinómetro de Windows (Hardware requerido).
+- **Dos modos de funcionamiento:**
+  - **Modo Estático (Bajo consumo)**
+  - **Modo Live (Tiempo real - Overlay)**
 - **Personalizable:** Incluye una interfaz (accesible mediante el icono oculto de la barra de tareas) para personalizar el desenfoque (blur), intensidad, sombras y límites de ángulo.
 
 ### ⚙️ Cómo empezar
@@ -42,6 +45,9 @@ Este proyecto es completamente de código abierto y se distribuye bajo la **Lice
 ### 🚀 Key Features
 - **Hardware-Accelerated D3D11 Effect:** Blazing-fast GPU rendering that ensures 0 latency with almost zero CPU overhead.
 - **Smart Built-in Sensor:** Automatically detects the exact tilt angle of the hinge natively using the Windows Inclinometer (Hardware required).
+- **Two operating modes:**
+  - **Static Mode (Low power)**
+  - **Live Mode (Real-time - Overlay)**
 - **Customizable:** Comes with a GUI (accessible from the system tray) to tweak the blur strength, depth, shadowing, and angle limits.
 
 ### ⚙️ Getting Started
