@@ -79,6 +79,10 @@ namespace FoldVision
                     {
                         _overlay.PrepareCapture();
                         _overlay.Opacity = 1;
+                        
+                        // Forzar refresco del Z-Order para cubrir ventanas Picture-in-Picture
+                        _overlay.Topmost = false;
+                        _overlay.Topmost = true;
                     }
                     _overlay.ApplyEffect(foldFactor);
                 }
