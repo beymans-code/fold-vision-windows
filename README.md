@@ -2,7 +2,7 @@
   <img src="FV.svg" width="128" alt="FoldVision Logo">
   <h1>FoldVision ✨</h1>
   <a href="https://github.com/beymans-code/fold-vision-windows/releases">
-    <img src="https://img.shields.io/github/downloads/beymans-code/fold-vision-windows/total?style=for-the-badge&color=blue" alt="Downloads">
+    <img src="https://img.shields.io/github/downloads/beymans-code/fold-vision-windows/total.svg?style=for-the-badge&color=blue&logo=github" alt="Downloads">
   </a>
 </div>
 
