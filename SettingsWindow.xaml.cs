@@ -100,6 +100,33 @@ namespace FoldVision
             AppSettings.Save();
         }
 
+        private void Uninstall_Click(object sender, RoutedEventArgs e)
+        {
+            string title = System.Windows.Application.Current.TryFindResource("UninstallConfirmTitle") as string ?? "Confirm Uninstall";
+            string message = System.Windows.Application.Current.TryFindResource("UninstallConfirmMessage") as string ?? "Are you sure you want to uninstall the application?";
+
+            MessageBoxResult result = System.Windows.MessageBox.Show(message, title, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (result == MessageBoxResult.Yes)
+            {
+                string appDir = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule?.FileName ?? "") ?? "";
+                string uninstallerPath = System.IO.Path.Combine(appDir, "unins000.exe");
+
+                if (System.IO.File.Exists(uninstallerPath))
+                {
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = uninstallerPath,
+                        UseShellExecute = true
+                    });
+                    System.Windows.Application.Current.Shutdown();
+                }
+                else
+                {
+                    System.Windows.MessageBox.Show("Uninstaller not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
         private void Reset_Click(object sender, RoutedEventArgs e)
         {
             _isInitializing = true;

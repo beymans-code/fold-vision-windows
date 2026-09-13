@@ -43,5 +43,10 @@
     <system:String x:Key="LanguageHeader">Idioma / Language</system:String>
     <system:String x:Key="LangSpanish">Español</system:String>
     <system:String x:Key="LangEnglish">English</system:String>
+    
+    <!-- Uninstall -->
+    <system:String x:Key="UninstallButton">Desinstalar Aplicación</system:String>
+    <system:String x:Key="UninstallConfirmTitle">Confirmar Desinstalación</system:String>
+    <system:String x:Key="UninstallConfirmMessage">¿Estás seguro de que deseas desinstalar la aplicación?</system:String>
 
 </ResourceDictionary>
