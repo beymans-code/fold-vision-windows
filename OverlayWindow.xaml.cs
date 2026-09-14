@@ -20,6 +20,7 @@ namespace FoldVision
         private float _curTurn      = 0f;
         private float _prevTurn     = 0f;
         private float _turnVelocity = 0f;
+        private bool  _forceRender  = false;
 
         private const float SpringTension = 250f;
         private const float SpringDamping = 30f;
@@ -158,12 +159,13 @@ namespace FoldVision
             }
 
             // Renderizar si hay frame o hay animación en curso
-            if ((newFrameReady || isAnimating) && currentFrame != null)
+            if ((newFrameReady || isAnimating || _forceRender) && currentFrame != null)
             {
                 _renderer.Render(currentFrame);
                 _d3dImage.Lock();
                 _d3dImage.AddDirtyRect(new Int32Rect(0, 0, _d3dImage.PixelWidth, _d3dImage.PixelHeight));
                 _d3dImage.Unlock();
+                _forceRender = false;
             }
 
             // Auto-ocultar cuando la animación de apertura termina
@@ -200,6 +202,21 @@ namespace FoldVision
             {
                 _liveCapture?.Dispose();
                 _liveCapture = null;
+                if (_curTurn > 0f)
+                {
+                    _staticCapture = new StaticCaptureService(_renderer.Device);
+                    _staticCapture.CaptureScreen();
+                }
+            }
+            ForceRender();
+        }
+
+        public void ForceRender()
+        {
+            if (_curTurn > 0f)
+            {
+                _forceRender = true;
+                StartAnimTimer();
             }
         }
 

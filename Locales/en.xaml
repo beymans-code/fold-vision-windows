@@ -1,22 +1,25 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!-- Tray Menu -->
     <system:String x:Key="TrayDebugSensor">🔧 Debug Sensor</system:String>
-    <system:String x:Key="TraySettings">⚙️ Effect Settings</system:String>
+    <system:String x:Key="TraySettings">⚙️ Settings</system:String>
     <system:String x:Key="TrayExit">❌ Exit</system:String>
 
     <!-- App / Startup -->
     <system:String x:Key="HardwareIncompatibleTitle">Incompatible Hardware</system:String>
-    <system:String x:Key="HardwareIncompatibleMsg">FoldVision is not compatible with this device.&#x0a;&#x0a;An integrated hardware Inclinometer sensor is required (common in 2-in-1 laptops or foldables) to detect the screen angle.</system:String>
+    <system:String x:Key="HardwareIncompatibleMsg">FoldVision is not compatible with this
+        device.&#x0a;&#x0a;An integrated hardware Inclinometer sensor is required (common in 2-in-1
+        laptops or foldables) to detect the screen angle.</system:String>
     <system:String x:Key="AppAlreadyRunningTitle">FoldVision is running</system:String>
-    <system:String x:Key="AppAlreadyRunningMsg">FoldVision is already running. You can find it in the system tray (next to the clock).</system:String>
+    <system:String x:Key="AppAlreadyRunningMsg">FoldVision is already running. You can find it in
+        the system tray (next to the clock).</system:String>
 
     <!-- Settings Window -->
-    <system:String x:Key="SettingsWinTitle">FoldVision — Settings</system:String>
-    <system:String x:Key="SettingsHeader">Effect Settings</system:String>
-    
+    <system:String x:Key="SettingsWinTitle">FoldVision</system:String>
+    <system:String x:Key="SettingsHeader">FoldVision (Settings)</system:String>
+
     <system:String x:Key="PerspectiveDepth">Perspective Depth</system:String>
     <system:String x:Key="MaxImageHeight">Maximum Image Height</system:String>
     <system:String x:Key="BlurIntensity">Blur Intensity</system:String>
@@ -25,7 +28,7 @@
     <system:String x:Key="CornerAnimRange">Radius Animation Range</system:String>
     <system:String x:Key="OpacityAnimStart">Opacity Fade Start (%)</system:String>
     <system:String x:Key="ClipHeight">Max Clip Height</system:String>
-    
+
     <system:String x:Key="AngleStart">Effect Start Angle</system:String>
     <system:String x:Key="AngleMax">Effect Max Angle</system:String>
 
@@ -40,20 +43,21 @@
 
     <!-- Debug Window -->
     <system:String x:Key="DebugSimulateAngle">Simulate hinge angle</system:String>
-    <system:String x:Key="DebugAngleRange">90° = open (no effect)   →   175° = closed (max blur)</system:String>
+    <system:String x:Key="DebugAngleRange">90° = open (no effect) → 175° = closed (max blur)</system:String>
     <system:String x:Key="DebugCurrentAngle">Current angle:</system:String>
-    
+
     <!-- Code strings -->
     <system:String x:Key="AutoStartEnabled">FoldVision will start automatically.</system:String>
     <system:String x:Key="AutoStartDisabled">FoldVision removed from auto-start.</system:String>
-    
+
     <system:String x:Key="LanguageHeader">Language</system:String>
     <system:String x:Key="LangSpanish">Español</system:String>
     <system:String x:Key="LangEnglish">English</system:String>
-    
+
     <!-- Uninstall -->
     <system:String x:Key="UninstallButton">Uninstall Application</system:String>
     <system:String x:Key="UninstallConfirmTitle">Confirm Uninstall</system:String>
-    <system:String x:Key="UninstallConfirmMessage">Are you sure you want to uninstall the application?</system:String>
+    <system:String x:Key="UninstallConfirmMessage">Are you sure you want to uninstall the
+        application?</system:String>
 
 </ResourceDictionary>

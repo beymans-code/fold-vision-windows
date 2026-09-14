@@ -70,12 +70,21 @@ namespace FoldVision
             AngleMaxValue.Text    = $"{AppSettings.AngleMax:F0}°";
         }
 
+        private void SaveAndForceUpdate()
+        {
+            AppSettings.Save();
+            if (System.Windows.Application.Current is App app)
+            {
+                app.ForceUpdate();
+            }
+        }
+
         private void DepthSlider_Changed(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (_isInitializing) return;
             AppSettings.CameraDepth = (float)e.NewValue;
             if (DepthValue != null) DepthValue.Text = $"{AppSettings.CameraDepth:F1}";
-            AppSettings.Save();
+            SaveAndForceUpdate();
         }
 
         private void StretchSlider_Changed(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -83,7 +92,7 @@ namespace FoldVision
             if (_isInitializing) return;
             AppSettings.StretchMultiplier = (float)e.NewValue;
             if (StretchValue != null) StretchValue.Text = $"{AppSettings.StretchMultiplier:F1}x";
-            AppSettings.Save();
+            SaveAndForceUpdate();
         }
 
         private void BlurSlider_Changed(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -91,7 +100,7 @@ namespace FoldVision
             if (_isInitializing) return;
             AppSettings.BlurStrength = (float)e.NewValue;
             if (BlurValue != null) BlurValue.Text = $"{AppSettings.BlurStrength:F2}";
-            AppSettings.Save();
+            SaveAndForceUpdate();
         }
 
         private void CornerSlider_Changed(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -99,7 +108,7 @@ namespace FoldVision
             if (_isInitializing) return;
             AppSettings.CornerRadius = (float)e.NewValue;
             if (CornerValue != null) CornerValue.Text = $"{AppSettings.CornerRadius:F0}px";
-            AppSettings.Save();
+            SaveAndForceUpdate();
         }
 
         private void CornerStartSlider_Changed(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -107,7 +116,7 @@ namespace FoldVision
             if (_isInitializing) return;
             AppSettings.CornerStartRadius = (float)e.NewValue;
             if (CornerStartValue != null) CornerStartValue.Text = $"{AppSettings.CornerStartRadius:F0}px";
-            AppSettings.Save();
+            SaveAndForceUpdate();
         }
 
         private void CornerAnimSlider_Changed(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -115,7 +124,7 @@ namespace FoldVision
             if (_isInitializing) return;
             AppSettings.CornerAnimRange = (float)e.NewValue;
             if (CornerAnimValue != null) CornerAnimValue.Text = $"{AppSettings.CornerAnimRange:P0}";
-            AppSettings.Save();
+            SaveAndForceUpdate();
         }
 
         private void OpacityAnimSlider_Changed(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -123,7 +132,7 @@ namespace FoldVision
             if (_isInitializing) return;
             AppSettings.OpacityAnimStart = (float)e.NewValue;
             if (OpacityAnimValue != null) OpacityAnimValue.Text = $"{AppSettings.OpacityAnimStart:P0}";
-            AppSettings.Save();
+            SaveAndForceUpdate();
         }
 
         private void ClipHeightSlider_Changed(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -131,7 +140,7 @@ namespace FoldVision
             if (_isInitializing) return;
             AppSettings.ClipHeight = (float)e.NewValue;
             if (ClipHeightValue != null) ClipHeightValue.Text = $"{AppSettings.ClipHeight:P0}";
-            AppSettings.Save();
+            SaveAndForceUpdate();
         }
 
         private void AngleStart_Changed(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -145,7 +154,7 @@ namespace FoldVision
                 AngleMaxSlider.Value = AppSettings.AngleMax;
             }
             if (AngleStartValue != null) AngleStartValue.Text = $"{AppSettings.AngleStart:F0}°";
-            AppSettings.Save();
+            SaveAndForceUpdate();
         }
 
         private void AngleMax_Changed(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -159,7 +168,7 @@ namespace FoldVision
                 AngleStartSlider.Value = AppSettings.AngleStart;
             }
             if (AngleMaxValue != null) AngleMaxValue.Text = $"{AppSettings.AngleMax:F0}°";
-            AppSettings.Save();
+            SaveAndForceUpdate();
         }
 
         private void Uninstall_Click(object sender, RoutedEventArgs e)
@@ -224,21 +233,21 @@ namespace FoldVision
         {
             if (_isInitializing) return;
             AppSettings.ShowDebugAngle = ShowDebugCheckBox.IsChecked == true;
-            AppSettings.Save();
+            SaveAndForceUpdate();
         }
 
         private void TabletMode_Changed(object sender, RoutedEventArgs e)
         {
             if (_isInitializing) return;
             AppSettings.DisableInTabletMode = chkTabletMode.IsChecked == true;
-            AppSettings.Save();
+            SaveAndForceUpdate();
         }
 
         private void AppMode_Changed(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             if (_isInitializing) return;
             AppSettings.AppMode = AppModeCombo.SelectedIndex == 1 ? "Live" : "Static";
-            AppSettings.Save();
+            SaveAndForceUpdate();
 
             if (System.Windows.Application.Current is App app)
             {

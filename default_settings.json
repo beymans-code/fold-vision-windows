@@ -7,7 +7,7 @@
   "ClipHeight": 0.4,
   "CornerAnimRange": 0.2,
   "OpacityAnimStart": 0.9,
-  "AngleStart": 100.0,
+  "AngleStart": 110.0,
   "AngleMax": 140.0,
   "AppMode": "Static",
   "DisableInTabletMode": true,

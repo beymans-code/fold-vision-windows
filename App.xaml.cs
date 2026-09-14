@@ -108,6 +108,11 @@ namespace FoldVision
             _overlay?.SwitchCaptureMode();
         }
 
+        public void ForceUpdate()
+        {
+            _overlay?.ForceRender();
+        }
+
         private void UpdateTrayMenuText()
         {
             if (_notifyIcon?.ContextMenuStrip == null) return;

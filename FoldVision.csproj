@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <PackageReference Include="H.NotifyIcon.Wpf" Version="2.1.0" />
+    <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="6.2.1" />
     <!-- System.Drawing.Common for GDI+ fallback -->
     <PackageReference Include="System.Drawing.Common" Version="8.0.8" />
     <!-- Vortice.Windows: D3D11, DXGI, D3DCompiler (runtime HLSL compile) -->
@@ -44,6 +45,9 @@
 
   <ItemGroup>
     <Resource Include="FV.png" />
+    <Resource Include="Fonts\BebasNeue-Regular.ttf" />
+    <Resource Include="Fonts\Poppins-Regular.ttf" />
+    <Resource Include="Fonts\Poppins-Bold.ttf" />
   </ItemGroup>
 
 </Project>
