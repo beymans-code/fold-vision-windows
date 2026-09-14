@@ -24,6 +24,7 @@
     <system:String x:Key="CornerRadius">Radio máximo de esquinas</system:String>
     <system:String x:Key="CornerStartRadius">Radio inicial de esquinas</system:String>
     <system:String x:Key="CornerAnimRange">Rango de animación del radio</system:String>
+    <system:String x:Key="OpacityAnimStart">Inicio de opacidad (%)</system:String>
     <system:String x:Key="ClipHeight">Altura máxima de la máscara</system:String>
     
     <system:String x:Key="AngleStart">Ángulo de inicio del efecto</system:String>

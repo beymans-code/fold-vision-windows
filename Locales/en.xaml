@@ -23,6 +23,7 @@
     <system:String x:Key="CornerRadius">Max Corner Radius</system:String>
     <system:String x:Key="CornerStartRadius">Start Corner Radius</system:String>
     <system:String x:Key="CornerAnimRange">Radius Animation Range</system:String>
+    <system:String x:Key="OpacityAnimStart">Opacity Fade Start (%)</system:String>
     <system:String x:Key="ClipHeight">Max Clip Height</system:String>
     
     <system:String x:Key="AngleStart">Effect Start Angle</system:String>

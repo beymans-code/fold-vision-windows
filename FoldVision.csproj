@@ -39,6 +39,7 @@
   <ItemGroup>
     <EmbeddedResource Include="FoldShader.hlsl" />
     <EmbeddedResource Include="FV.ico" />
+    <EmbeddedResource Include="default_settings.json" />
   </ItemGroup>
 
   <ItemGroup>

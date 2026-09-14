@@ -1,0 +1,16 @@
+{
+  "CameraDepth": 3.5,
+  "StretchMultiplier": 0.7,
+  "BlurStrength": 0.65,
+  "CornerRadius": 80.0,
+  "CornerStartRadius": 25.0,
+  "ClipHeight": 0.4,
+  "CornerAnimRange": 0.2,
+  "OpacityAnimStart": 0.9,
+  "AngleStart": 100.0,
+  "AngleMax": 140.0,
+  "AppMode": "Static",
+  "DisableInTabletMode": true,
+  "ShowDebugAngle": false,
+  "Language": "en"
+}

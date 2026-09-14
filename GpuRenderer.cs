@@ -35,7 +35,7 @@ namespace FoldVision
         public  ID3D11Texture2D?      RenderTarget { get; private set; }
 
         // ── Uniforms (debe coincidir exactamente con cbuffer en HLSL) ────
-        [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 64)]
+        [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit, Size = 80)]
         private struct ShaderUniforms
         {
             [System.Runtime.InteropServices.FieldOffset(0)]  public float ImageW;
@@ -54,6 +54,7 @@ namespace FoldVision
             [System.Runtime.InteropServices.FieldOffset(52)] public float ClipHeight;
             [System.Runtime.InteropServices.FieldOffset(56)] public float CornerAnimRange;
             [System.Runtime.InteropServices.FieldOffset(60)] public float CornerStartRadius;
+            [System.Runtime.InteropServices.FieldOffset(64)] public float OpacityAnimStart;
         }
 
         // Uniforms dinamicos (actualizar via AppSettings)
@@ -239,7 +240,8 @@ namespace FoldVision
                 CornerRadius        = AppSettings.CornerRadius,
                 ClipHeight          = AppSettings.ClipHeight,
                 CornerAnimRange     = AppSettings.CornerAnimRange,
-                CornerStartRadius   = AppSettings.CornerStartRadius
+                CornerStartRadius   = AppSettings.CornerStartRadius,
+                OpacityAnimStart    = AppSettings.OpacityAnimStart
             };
 
             var mapped = _ctx.Map(_cbuffer!, 0, MapMode.WriteDiscard, Vortice.Direct3D11.MapFlags.None);

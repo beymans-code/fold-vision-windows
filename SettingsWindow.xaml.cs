@@ -27,6 +27,7 @@ namespace FoldVision
             CornerSlider.Value          = AppSettings.CornerRadius;
             CornerStartSlider.Value     = AppSettings.CornerStartRadius;
             CornerAnimSlider.Value      = AppSettings.CornerAnimRange;
+            OpacityAnimSlider.Value     = AppSettings.OpacityAnimStart;
             ClipHeightSlider.Value      = AppSettings.ClipHeight;
             AngleStartSlider.Value      = AppSettings.AngleStart;
             AngleMaxSlider.Value        = AppSettings.AngleMax;
@@ -63,6 +64,7 @@ namespace FoldVision
             CornerValue.Text      = $"{AppSettings.CornerRadius:F0}px";
             CornerStartValue.Text = $"{AppSettings.CornerStartRadius:F0}px";
             CornerAnimValue.Text  = $"{AppSettings.CornerAnimRange:P0}";
+            OpacityAnimValue.Text = $"{AppSettings.OpacityAnimStart:P0}";
             ClipHeightValue.Text  = $"{AppSettings.ClipHeight:P0}";
             AngleStartValue.Text  = $"{AppSettings.AngleStart:F0}°";
             AngleMaxValue.Text    = $"{AppSettings.AngleMax:F0}°";
@@ -113,6 +115,14 @@ namespace FoldVision
             if (_isInitializing) return;
             AppSettings.CornerAnimRange = (float)e.NewValue;
             if (CornerAnimValue != null) CornerAnimValue.Text = $"{AppSettings.CornerAnimRange:P0}";
+            AppSettings.Save();
+        }
+
+        private void OpacityAnimSlider_Changed(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (_isInitializing) return;
+            AppSettings.OpacityAnimStart = (float)e.NewValue;
+            if (OpacityAnimValue != null) OpacityAnimValue.Text = $"{AppSettings.OpacityAnimStart:P0}";
             AppSettings.Save();
         }
 
@@ -181,18 +191,12 @@ namespace FoldVision
 
         private void Reset_Click(object sender, RoutedEventArgs e)
         {
-            _isInitializing = true;
-            AppSettings.CameraDepth       = 3.2f;
-            AppSettings.StretchMultiplier = 0.6f;
-            AppSettings.BlurStrength      = 0.50f;
-            AppSettings.CornerRadius      = 30f;
-            AppSettings.CornerStartRadius = 10f;
-            AppSettings.CornerAnimRange   = 0.20f;
-            AppSettings.ClipHeight        = 1.0f;
-            AppSettings.AngleStart        = 110f;
-            AppSettings.AngleMax          = 140f;
-            LoadCurrentValues();
+            AppSettings.LoadDefaults();
             AppSettings.Save();
+            
+            _isInitializing = true;
+            LoadCurrentValues();
+            _isInitializing = false;
         }
 
         private void AutoStart_Changed(object sender, RoutedEventArgs e)

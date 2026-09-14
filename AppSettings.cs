@@ -23,6 +23,9 @@ namespace FoldVision
         /// <summary>Rango de animación del radio de las esquinas (fracción de la apertura).</summary>
         public static float CornerAnimRange   = 0.20f; // rango: 0.01 – 1.0
 
+        /// <summary>Progreso (0-1) a partir del cual la opacidad empieza a desvanecerse.</summary>
+        public static float OpacityAnimStart  = 0.10f; // rango: 0.0 – 1.0
+
         /// <summary>Altura máxima de la máscara clip [0.0 = sin máscara … 1.0 = pantalla completa].</summary>
         public static float ClipHeight        = 1.0f;  // rango: 0.0 – 1.0
 
@@ -89,25 +92,48 @@ namespace FoldVision
                 {
                     string json = File.ReadAllText(path);
                     var data = JsonSerializer.Deserialize<SettingsData>(json);
-                    if (data != null)
-                    {
-                        CornerRadius      = data.CornerRadius;
-                        CornerStartRadius = data.CornerStartRadius;
-                        ClipHeight        = data.ClipHeight;
-                        CornerAnimRange   = data.CornerAnimRange;
-                        CameraDepth       = data.CameraDepth;
-                        StretchMultiplier = data.StretchMultiplier;
-                        BlurStrength = data.BlurStrength;
-                        AngleStart = data.AngleStart;
-                        AngleMax = data.AngleMax;
-                        ShowDebugAngle = data.ShowDebugAngle;
-                        DisableInTabletMode = data.DisableInTabletMode;
-                        AppMode = data.AppMode ?? "Static";
-                        Language = data.Language ?? "es";
-                    }
+                    if (data != null) ApplyData(data);
                 }
-                catch { /* Si hay error, se quedan los por defecto */ }
+                catch { LoadDefaults(); }
             }
+            else
+            {
+                LoadDefaults();
+            }
+        }
+
+        public static void LoadDefaults()
+        {
+            try
+            {
+                using var stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("FoldVision.default_settings.json");
+                if (stream != null)
+                {
+                    using var reader = new StreamReader(stream);
+                    string json = reader.ReadToEnd();
+                    var data = JsonSerializer.Deserialize<SettingsData>(json);
+                    if (data != null) ApplyData(data);
+                }
+            }
+            catch { }
+        }
+
+        private static void ApplyData(SettingsData data)
+        {
+            CornerRadius        = data.CornerRadius;
+            CornerStartRadius   = data.CornerStartRadius;
+            ClipHeight          = data.ClipHeight;
+            CornerAnimRange     = data.CornerAnimRange;
+            OpacityAnimStart    = data.OpacityAnimStart;
+            CameraDepth         = data.CameraDepth;
+            StretchMultiplier   = data.StretchMultiplier;
+            BlurStrength        = data.BlurStrength;
+            AngleStart          = data.AngleStart;
+            AngleMax            = data.AngleMax;
+            ShowDebugAngle      = data.ShowDebugAngle;
+            DisableInTabletMode = data.DisableInTabletMode;
+            AppMode             = data.AppMode ?? "Static";
+            Language            = data.Language ?? "es";
         }
 
         public static void Save()
@@ -120,6 +146,7 @@ namespace FoldVision
                     CornerStartRadius = CornerStartRadius,
                     ClipHeight        = ClipHeight,
                     CornerAnimRange   = CornerAnimRange,
+                    OpacityAnimStart  = OpacityAnimStart,
                     CameraDepth       = CameraDepth,
                     StretchMultiplier = StretchMultiplier,
                     BlurStrength = BlurStrength,
@@ -139,18 +166,19 @@ namespace FoldVision
 
     public class SettingsData
     {
-        public float CornerRadius      { get; set; } = 30f;
-        public float CornerStartRadius { get; set; } = 10f;
-        public float CornerAnimRange   { get; set; } = 0.20f;
-        public float ClipHeight        { get; set; } = 1.0f;
-        public float CameraDepth       { get; set; } = 3.2f;
-        public float StretchMultiplier { get; set; } = 0.6f;
-        public float BlurStrength { get; set; } = 0.50f;
-        public float AngleStart { get; set; } = 110f;
-        public float AngleMax { get; set; } = 140f;
-        public bool ShowDebugAngle { get; set; } = false;
-        public bool DisableInTabletMode { get; set; } = true;
-        public string AppMode { get; set; } = "Static";
-        public string Language { get; set; } = "es";
+        public float CornerRadius      { get; set; }
+        public float CornerStartRadius { get; set; }
+        public float CornerAnimRange   { get; set; }
+        public float OpacityAnimStart  { get; set; }
+        public float ClipHeight        { get; set; }
+        public float CameraDepth       { get; set; }
+        public float StretchMultiplier { get; set; }
+        public float BlurStrength      { get; set; }
+        public float AngleStart        { get; set; }
+        public float AngleMax          { get; set; }
+        public bool ShowDebugAngle     { get; set; }
+        public bool DisableInTabletMode{ get; set; }
+        public string AppMode          { get; set; } = "Static";
+        public string Language         { get; set; } = "es";
     }
 }

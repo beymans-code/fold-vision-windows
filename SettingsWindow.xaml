@@ -98,6 +98,15 @@
             <Slider x:Name="CornerAnimSlider" Minimum="0.01" Maximum="1.0" SmallChange="0.01" LargeChange="0.1"
                     ValueChanged="CornerAnimSlider_Changed"/>
 
+            <!-- Inicio de desvanecimiento (opacidad) -->
+            <Grid Margin="0,14,0,2">
+                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <TextBlock Text="{DynamicResource OpacityAnimStart}"/>
+                <TextBlock x:Name="OpacityAnimValue" Grid.Column="1" FontWeight="Bold" TextAlignment="Right"/>
+            </Grid>
+            <Slider x:Name="OpacityAnimSlider" Minimum="0.0" Maximum="1.0" SmallChange="0.01" LargeChange="0.1"
+                    ValueChanged="OpacityAnimSlider_Changed"/>
+
             <!-- Rango de activación -->
             <Grid Margin="0,14,0,2">
                 <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>

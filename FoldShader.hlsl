@@ -34,6 +34,8 @@ cbuffer Uniforms : register(b0)
     float  clipHeight;         // altura máxima de la máscara [0.0-1.0 fracción de pantalla]
     float  cornerAnimRange;    // rango de apertura en el que el radio alcanza su máximo
     float  cornerStartRadius;  // radio inicial de las esquinas en píxeles
+    float  opacityAnimStart;   // progreso [0-1] donde empieza el desvanecimiento a negro
+    float3 _pad4;
 };
 
 // ─────────────────────────────────────────────
@@ -176,16 +178,20 @@ float4 PS(VSOut input) : SV_TARGET
     float  animProgress = clamp(turn / max(cornerAnimRange, 0.0001), 0.0, 1.0);
     float  cr       = lerp(cornerStartRadius, cornerRadius, animProgress);
 
-    // Calculamos el Signed Distance Field (SDF) de la máscara
-    // Distancia positiva = dentro de la máscara, negativa = fuera (arriba)
+    // El clip también debe deformarse con la perspectiva (cameraDepth)
+    // Para ello mapeamos la coordenada X de vuelta al espacio de la imagen
+    float warpedX = x_img * screenW;
+    
+    // Calculamos el Signed Distance Field (SDF) de la máscara usando warpedX
+    // Distancia positiva = dentro de la máscara, negativa = fuera (arriba/esquinas)
     float signed_dist = p.y - topY; 
     
     if (cr > 0.0 && p.y < topY + cr)
     {
-        if (p.x < cr)
-            signed_dist = cr - length(p - float2(cr, topY + cr));
-        else if (p.x > screenW - cr)
-            signed_dist = cr - length(p - float2(screenW - cr, topY + cr));
+        if (warpedX < cr)
+            signed_dist = cr - length(float2(warpedX - cr, p.y - (topY + cr)));
+        else if (warpedX > screenW - cr)
+            signed_dist = cr - length(float2(warpedX - (screenW - cr), p.y - (topY + cr)));
     }
 
     // El difuminado de la máscara coincide con el nivel de blur actual
@@ -199,6 +205,14 @@ float4 PS(VSOut input) : SV_TARGET
     // Usamos el Alpha difuminado para fundir los bordes de la pantalla virtual
     // con el negro absoluto del espacio exterior.
     color = lerp(float3(0.0, 0.0, 0.0), color, alpha);
+
+    // ── 7. Desvanecimiento a negro (Fade to Black) ─────────────────────────
+    float fadeOpacity = 1.0;
+    if (turn > opacityAnimStart && opacityAnimStart < 1.0)
+    {
+        fadeOpacity = 1.0 - saturate((turn - opacityAnimStart) / (1.0 - opacityAnimStart));
+    }
+    color = lerp(float3(0.0, 0.0, 0.0), color, fadeOpacity);
 
     return float4(color, 1.0);
 }
