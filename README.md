@@ -35,7 +35,7 @@ Puedes descargar la versión que prefieras desde la [sección de Releases en Git
 - **Instalador (`FoldVision_Setup.exe`):** Recomendado para la mayoría de usuarios.
 - **Versión Portable (`FoldVision_Portable.exe`):** Un único archivo ejecutable que no requiere instalación.
 
-*Importante: Al ser archivos sin firma digital, el Control Inteligente de Aplicaciones o SmartScreen de Windows podría mostrar una advertencia. Para evitarlo, haz **clic derecho** en el archivo descargado > **Propiedades** > marca la casilla **Desbloquear** en la parte inferior y haz clic en Aplicar antes de ejecutarlo.*
+*Importante: Al ser una aplicación sin firma digital, es necesario que el **Control Inteligente de Aplicaciones** (Smart App Control) de Windows esté **Desactivado** (Off), de lo contrario bloqueará la ejecución del programa. Además, si al abrirlo aparece una pantalla azul de **SmartScreen** diciendo "Windows protegió su PC", haz clic en **"Más información"** y luego en el botón **"Ejecutar de todas formas"**. (Alternativamente, puedes evitar esto haciendo **clic derecho** en el archivo descargado > **Propiedades** > marcar **Desbloquear** y luego Aplicar).*
 
 *Siéntete libre de analizar el ejecutable con VirusTotal; si arroja algún reporte de app maliciosa, ten por seguro que es solo un **FALSO POSITIVO**.*
 
@@ -78,7 +78,7 @@ You can download your preferred version from the [GitHub Releases section](https
 - **Installer (`FoldVision_Setup.exe`):** Recommended for most users.
 - **Portable Version (`FoldVision_Portable.exe`):** A single executable file that requires no installation.
 
-*Important: Since these are unsigned files, Windows SmartScreen or Smart App Control might show a warning. To prevent this, **right-click** the downloaded file > **Properties** > check the **Unblock** box at the bottom and click Apply before running it.*
+*Important: Since this is an unsigned application, it is required that Windows **Smart App Control** is set to **Off**, otherwise it will block the execution of the program. Additionally, if you see a blue **SmartScreen** window saying "Windows protected your PC", click on **"More info"** and then on the **"Run anyway"** button. (Alternatively, you can prevent this by **right-clicking** the downloaded file > **Properties** > checking the **Unblock** box and clicking Apply).*
 
 *You are welcome to scan the executable with VirusTotal; if it shows any malicious app reports, rest assured it is just a **FALSE POSITIVE**.*
 
