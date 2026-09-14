@@ -40,5 +40,9 @@
     <EmbeddedResource Include="FV.ico" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Resource Include="FV.png" />
+  </ItemGroup>
+
 </Project>
 

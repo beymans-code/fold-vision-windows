@@ -10,6 +10,9 @@
     <!-- App / Startup -->
     <system:String x:Key="HardwareIncompatibleTitle">Hardware Incompatible</system:String>
     <system:String x:Key="HardwareIncompatibleMsg">FoldVision no es compatible con este dispositivo.&#x0a;&#x0a;Se requiere un sensor Inclinómetro de hardware integrado (común en portátiles 2-en-1 o plegables) para detectar el ángulo de la pantalla.</system:String>
+    <system:String x:Key="AppAlreadyRunningTitle">FoldVision en ejecución</system:String>
+    <system:String x:Key="AppAlreadyRunningMsg">FoldVision ya se está ejecutando. Puedes encontrarlo en la bandeja del sistema (junto al reloj).</system:String>
+
 
     <!-- Settings Window -->
     <system:String x:Key="SettingsWinTitle">FoldVision — Ajustes</system:String>

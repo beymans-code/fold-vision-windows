@@ -1,6 +1,8 @@
 using WpfApplication     = System.Windows.Application;
 using WpfStartupEventArgs = System.Windows.StartupEventArgs;
 using WpfExitEventArgs    = System.Windows.ExitEventArgs;
+using System.Threading;
+
 
 namespace FoldVision
 {
@@ -8,16 +10,29 @@ namespace FoldVision
     {
         private System.Windows.Forms.NotifyIcon? _notifyIcon;
         private OverlayWindow? _overlay;
+        private Mutex? _mutex;
 
         private void Application_Startup(object sender, WpfStartupEventArgs e)
         {
+            AppSettings.Load();
+            ChangeLanguage(AppSettings.Language);
+
+            _mutex = new Mutex(true, "FoldVisionSingleInstanceMutex", out bool createdNew);
+            if (!createdNew)
+            {
+                System.Windows.MessageBox.Show(
+                    GetResourceString("AppAlreadyRunningMsg"),
+                    GetResourceString("AppAlreadyRunningTitle"),
+                    System.Windows.MessageBoxButton.OK,
+                    System.Windows.MessageBoxImage.Information);
+                Shutdown();
+                return;
+            }
+
             AppDomain.CurrentDomain.UnhandledException += (s, args) =>
             {
                 try { System.IO.File.WriteAllText(AppSettings.GetCrashLogPath(), args.ExceptionObject.ToString()); } catch { }
             };
-
-            AppSettings.Load();
-            ChangeLanguage(AppSettings.Language);
 
             _overlay = new OverlayWindow { Opacity = 0 };
             _overlay.Show();
@@ -154,6 +169,7 @@ namespace FoldVision
             SensorService.Instance.AngleChanged -= OnAngleChanged;
             SensorService.Instance.Stop();
             _notifyIcon?.Dispose();
+            _mutex?.Dispose();
             base.OnExit(e);
         }
     }

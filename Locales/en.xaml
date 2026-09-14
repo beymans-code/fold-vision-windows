@@ -9,7 +9,9 @@
 
     <!-- App / Startup -->
     <system:String x:Key="HardwareIncompatibleTitle">Incompatible Hardware</system:String>
-    <system:String x:Key="HardwareIncompatibleMsg">FoldVision is not compatible with this device.&#x0a;&#x0a;A built-in hardware Inclinometer sensor (common in 2-in-1 laptops or foldables) is required to detect the screen angle.</system:String>
+    <system:String x:Key="HardwareIncompatibleMsg">FoldVision is not compatible with this device.&#x0a;&#x0a;An integrated hardware Inclinometer sensor is required (common in 2-in-1 laptops or foldables) to detect the screen angle.</system:String>
+    <system:String x:Key="AppAlreadyRunningTitle">FoldVision is running</system:String>
+    <system:String x:Key="AppAlreadyRunningMsg">FoldVision is already running. You can find it in the system tray (next to the clock).</system:String>
 
     <!-- Settings Window -->
     <system:String x:Key="SettingsWinTitle">FoldVision — Settings</system:String>
