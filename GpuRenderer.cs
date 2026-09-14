@@ -50,10 +50,10 @@ namespace FoldVision
             [System.Runtime.InteropServices.FieldOffset(36)] public float MotionBoost;
             [System.Runtime.InteropServices.FieldOffset(40)] public float CameraDepth;
             [System.Runtime.InteropServices.FieldOffset(44)] public float StretchMult;
-            [System.Runtime.InteropServices.FieldOffset(48)] public float _pad0;
-            [System.Runtime.InteropServices.FieldOffset(52)] public float _pad1;
-            [System.Runtime.InteropServices.FieldOffset(56)] public float _pad2;
-            [System.Runtime.InteropServices.FieldOffset(60)] public float _pad3;
+            [System.Runtime.InteropServices.FieldOffset(48)] public float CornerRadius;
+            [System.Runtime.InteropServices.FieldOffset(52)] public float ClipHeight;
+            [System.Runtime.InteropServices.FieldOffset(56)] public float CornerAnimRange;
+            [System.Runtime.InteropServices.FieldOffset(60)] public float CornerStartRadius;
         }
 
         // Uniforms dinamicos (actualizar via AppSettings)
@@ -235,7 +235,11 @@ namespace FoldVision
                 SampleCount         = sampleCount,
                 MotionBoost         = MotionBoost,
                 CameraDepth         = AppSettings.CameraDepth,
-                StretchMult         = AppSettings.StretchMultiplier
+                StretchMult         = AppSettings.StretchMultiplier,
+                CornerRadius        = AppSettings.CornerRadius,
+                ClipHeight          = AppSettings.ClipHeight,
+                CornerAnimRange     = AppSettings.CornerAnimRange,
+                CornerStartRadius   = AppSettings.CornerStartRadius
             };
 
             var mapped = _ctx.Map(_cbuffer!, 0, MapMode.WriteDiscard, Vortice.Direct3D11.MapFlags.None);

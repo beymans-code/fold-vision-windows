@@ -30,7 +30,10 @@ cbuffer Uniforms : register(b0)
     float  motionBoost;        // extra blur por velocidad de cierre
     float  cameraDepth;        // distancia de cámara para perspectiva 3D [0.5-5.0]
     float  stretchMult;        // multiplicador del estiramiento vertical [0-4]
-    float  _pad0;
+    float  cornerRadius;       // radio de las esquinas superiores en píxeles [0-80]
+    float  clipHeight;         // altura máxima de la máscara [0.0-1.0 fracción de pantalla]
+    float  cornerAnimRange;    // rango de apertura en el que el radio alcanza su máximo
+    float  cornerStartRadius;  // radio inicial de las esquinas en píxeles
 };
 
 // ─────────────────────────────────────────────
@@ -159,15 +162,41 @@ float4 PS(VSOut input) : SV_TARGET
     float darken = turn * 0.75;
     color       *= (1.0 - darken * 0.5);
 
-    // ── 5. Sombra dinámica progresiva (Shadow Front) ─────────────────────
-    // A medida que la tapa se cierra (turn -> 1), la "sombra" desciende 
-    // desde arriba (1.0) hacia abajo (0.0).
-    float shadowFront = 1.0 - turn;
-    float shadowAlpha = smoothstep(shadowFront - 0.15, shadowFront + 0.2, dist_img);
-    color  = lerp(color, DARK, shadowAlpha * 0.98);
+    // ── 5. Máscara clip dinámica con esquinas superiores redondeadas ──────────
+    // La máscara baja proporcionalmente al ángulo de cierre (turn).
+    // clipHeight define el recorrido máximo (0.0 a 1.0 de la pantalla).
+    float screenW = imageSize.x;
+    float screenH = imageSize.y;
+    float2 p      = input.pos.xy;   // coordenadas de píxel del render target
     
-    // ── 6. Suavizado de bordes (Difuminado en Alpha) ─────────────────────
-    // Usamos el Alpha difuminado para fundir los bordes de la pantalla virtual 
+    float  maxDropY = clipHeight * screenH;
+    float  topY     = turn * maxDropY; // Borde superior dinámico
+    
+    // Anima el radio de las esquinas basado en 'turn' hasta 'cornerAnimRange'
+    float  animProgress = clamp(turn / max(cornerAnimRange, 0.0001), 0.0, 1.0);
+    float  cr       = lerp(cornerStartRadius, cornerRadius, animProgress);
+
+    // Calculamos el Signed Distance Field (SDF) de la máscara
+    // Distancia positiva = dentro de la máscara, negativa = fuera (arriba)
+    float signed_dist = p.y - topY; 
+    
+    if (cr > 0.0 && p.y < topY + cr)
+    {
+        if (p.x < cr)
+            signed_dist = cr - length(p - float2(cr, topY + cr));
+        else if (p.x > screenW - cr)
+            signed_dist = cr - length(p - float2(screenW - cr, topY + cr));
+    }
+
+    // El difuminado de la máscara coincide con el nivel de blur actual
+    // Esto hace que los bordes del clip se vean borrosos al igual que la pantalla
+    float softness = max(blurRadius * 1.5, 1.5); 
+    float clipMask = smoothstep(-softness, softness, signed_dist);
+
+    color = lerp(DARK, color, clipMask);
+
+    // ── 6. Suavizado de bordes (Difuminado en Alpha) ───────────────────────
+    // Usamos el Alpha difuminado para fundir los bordes de la pantalla virtual
     // con el negro absoluto del espacio exterior.
     color = lerp(float3(0.0, 0.0, 0.0), color, alpha);
 

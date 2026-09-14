@@ -20,6 +20,10 @@
     <system:String x:Key="PerspectiveDepth">Perspective Depth</system:String>
     <system:String x:Key="MaxImageHeight">Maximum Image Height</system:String>
     <system:String x:Key="BlurIntensity">Blur Intensity</system:String>
+    <system:String x:Key="CornerRadius">Max Corner Radius</system:String>
+    <system:String x:Key="CornerStartRadius">Start Corner Radius</system:String>
+    <system:String x:Key="CornerAnimRange">Radius Animation Range</system:String>
+    <system:String x:Key="ClipHeight">Max Clip Height</system:String>
     
     <system:String x:Key="AngleStart">Effect Start Angle</system:String>
     <system:String x:Key="AngleMax">Effect Max Angle</system:String>

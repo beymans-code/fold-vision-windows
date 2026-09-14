@@ -19,6 +19,10 @@ namespace FoldVision
             DepthSlider.Value           = AppSettings.CameraDepth;
             StretchSlider.Value         = AppSettings.StretchMultiplier;
             BlurSlider.Value            = AppSettings.BlurStrength;
+            CornerSlider.Value          = AppSettings.CornerRadius;
+            CornerStartSlider.Value     = AppSettings.CornerStartRadius;
+            CornerAnimSlider.Value      = AppSettings.CornerAnimRange;
+            ClipHeightSlider.Value      = AppSettings.ClipHeight;
             AngleStartSlider.Value      = AppSettings.AngleStart;
             AngleMaxSlider.Value        = AppSettings.AngleMax;
             ShowDebugCheckBox.IsChecked = AppSettings.ShowDebugAngle;
@@ -51,6 +55,10 @@ namespace FoldVision
             DepthValue.Text       = $"{AppSettings.CameraDepth:F1}";
             StretchValue.Text     = $"{AppSettings.StretchMultiplier:F1}x";
             BlurValue.Text        = $"{AppSettings.BlurStrength:F2}";
+            CornerValue.Text      = $"{AppSettings.CornerRadius:F0}px";
+            CornerStartValue.Text = $"{AppSettings.CornerStartRadius:F0}px";
+            CornerAnimValue.Text  = $"{AppSettings.CornerAnimRange:P0}";
+            ClipHeightValue.Text  = $"{AppSettings.ClipHeight:P0}";
             AngleStartValue.Text  = $"{AppSettings.AngleStart:F0}°";
             AngleMaxValue.Text    = $"{AppSettings.AngleMax:F0}°";
         }
@@ -76,6 +84,38 @@ namespace FoldVision
             if (_isInitializing) return;
             AppSettings.BlurStrength = (float)e.NewValue;
             if (BlurValue != null) BlurValue.Text = $"{AppSettings.BlurStrength:F2}";
+            AppSettings.Save();
+        }
+
+        private void CornerSlider_Changed(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (_isInitializing) return;
+            AppSettings.CornerRadius = (float)e.NewValue;
+            if (CornerValue != null) CornerValue.Text = $"{AppSettings.CornerRadius:F0}px";
+            AppSettings.Save();
+        }
+
+        private void CornerStartSlider_Changed(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (_isInitializing) return;
+            AppSettings.CornerStartRadius = (float)e.NewValue;
+            if (CornerStartValue != null) CornerStartValue.Text = $"{AppSettings.CornerStartRadius:F0}px";
+            AppSettings.Save();
+        }
+
+        private void CornerAnimSlider_Changed(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (_isInitializing) return;
+            AppSettings.CornerAnimRange = (float)e.NewValue;
+            if (CornerAnimValue != null) CornerAnimValue.Text = $"{AppSettings.CornerAnimRange:P0}";
+            AppSettings.Save();
+        }
+
+        private void ClipHeightSlider_Changed(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (_isInitializing) return;
+            AppSettings.ClipHeight = (float)e.NewValue;
+            if (ClipHeightValue != null) ClipHeightValue.Text = $"{AppSettings.ClipHeight:P0}";
             AppSettings.Save();
         }
 
@@ -140,6 +180,10 @@ namespace FoldVision
             AppSettings.CameraDepth       = 3.2f;
             AppSettings.StretchMultiplier = 0.6f;
             AppSettings.BlurStrength      = 0.50f;
+            AppSettings.CornerRadius      = 30f;
+            AppSettings.CornerStartRadius = 10f;
+            AppSettings.CornerAnimRange   = 0.20f;
+            AppSettings.ClipHeight        = 1.0f;
             AppSettings.AngleStart        = 110f;
             AppSettings.AngleMax          = 140f;
             LoadCurrentValues();

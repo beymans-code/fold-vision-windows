@@ -14,6 +14,18 @@ namespace FoldVision
         /// <summary>Distancia de cámara para la perspectiva 3D. Mayor = menos perspectiva.</summary>
         public static float CameraDepth       = 3.2f;   // rango: 0.5 – 5.0
 
+        /// <summary>Radio en píxeles de las esquinas superiores del clip [0-80].</summary>
+        public static float CornerRadius      = 30f;   // rango: 0 – 80
+        
+        /// <summary>Radio inicial en píxeles de las esquinas superiores del clip [0-80].</summary>
+        public static float CornerStartRadius = 10f;   // rango: 0 – 80
+        
+        /// <summary>Rango de animación del radio de las esquinas (fracción de la apertura).</summary>
+        public static float CornerAnimRange   = 0.20f; // rango: 0.01 – 1.0
+
+        /// <summary>Altura máxima de la máscara clip [0.0 = sin máscara … 1.0 = pantalla completa].</summary>
+        public static float ClipHeight        = 1.0f;  // rango: 0.0 – 1.0
+
         /// <summary>Multiplicador del estiramiento vertical máximo.</summary>
         public static float StretchMultiplier = 0.6f;   // rango: 0.0 – 4.0
 
@@ -79,7 +91,11 @@ namespace FoldVision
                     var data = JsonSerializer.Deserialize<SettingsData>(json);
                     if (data != null)
                     {
-                        CameraDepth = data.CameraDepth;
+                        CornerRadius      = data.CornerRadius;
+                        CornerStartRadius = data.CornerStartRadius;
+                        ClipHeight        = data.ClipHeight;
+                        CornerAnimRange   = data.CornerAnimRange;
+                        CameraDepth       = data.CameraDepth;
                         StretchMultiplier = data.StretchMultiplier;
                         BlurStrength = data.BlurStrength;
                         AngleStart = data.AngleStart;
@@ -100,7 +116,11 @@ namespace FoldVision
             {
                 var data = new SettingsData
                 {
-                    CameraDepth = CameraDepth,
+                    CornerRadius      = CornerRadius,
+                    CornerStartRadius = CornerStartRadius,
+                    ClipHeight        = ClipHeight,
+                    CornerAnimRange   = CornerAnimRange,
+                    CameraDepth       = CameraDepth,
                     StretchMultiplier = StretchMultiplier,
                     BlurStrength = BlurStrength,
                     AngleStart = AngleStart,
@@ -119,7 +139,11 @@ namespace FoldVision
 
     public class SettingsData
     {
-        public float CameraDepth { get; set; } = 3.2f;
+        public float CornerRadius      { get; set; } = 30f;
+        public float CornerStartRadius { get; set; } = 10f;
+        public float CornerAnimRange   { get; set; } = 0.20f;
+        public float ClipHeight        { get; set; } = 1.0f;
+        public float CameraDepth       { get; set; } = 3.2f;
         public float StretchMultiplier { get; set; } = 0.6f;
         public float BlurStrength { get; set; } = 0.50f;
         public float AngleStart { get; set; } = 110f;

@@ -21,6 +21,10 @@
     <system:String x:Key="PerspectiveDepth">Profundidad de perspectiva</system:String>
     <system:String x:Key="MaxImageHeight">Altura máxima de la imagen</system:String>
     <system:String x:Key="BlurIntensity">Intensidad del desenfoque</system:String>
+    <system:String x:Key="CornerRadius">Radio máximo de esquinas</system:String>
+    <system:String x:Key="CornerStartRadius">Radio inicial de esquinas</system:String>
+    <system:String x:Key="CornerAnimRange">Rango de animación del radio</system:String>
+    <system:String x:Key="ClipHeight">Altura máxima de la máscara</system:String>
     
     <system:String x:Key="AngleStart">Ángulo de inicio del efecto</system:String>
     <system:String x:Key="AngleMax">Ángulo de efecto máximo</system:String>
