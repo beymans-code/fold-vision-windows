@@ -1,10 +1,15 @@
+using System;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Interop;
 using Microsoft.Win32;
+
+using Wpf.Ui.Controls;
 
 namespace FoldVision
 {
-    public partial class SettingsWindow : Window
+    public partial class SettingsWindow : FluentWindow
     {
         private bool _isInitializing = true;
 
@@ -152,8 +157,8 @@ namespace FoldVision
             string title = System.Windows.Application.Current.TryFindResource("UninstallConfirmTitle") as string ?? "Confirm Uninstall";
             string message = System.Windows.Application.Current.TryFindResource("UninstallConfirmMessage") as string ?? "Are you sure you want to uninstall the application?";
 
-            MessageBoxResult result = System.Windows.MessageBox.Show(message, title, MessageBoxButton.YesNo, MessageBoxImage.Warning);
-            if (result == MessageBoxResult.Yes)
+            System.Windows.MessageBoxResult result = System.Windows.MessageBox.Show(message, title, System.Windows.MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (result == System.Windows.MessageBoxResult.Yes)
             {
                 string appDir = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule?.FileName ?? "") ?? "";
                 string uninstallerPath = System.IO.Path.Combine(appDir, "unins000.exe");
@@ -169,7 +174,7 @@ namespace FoldVision
                 }
                 else
                 {
-                    System.Windows.MessageBox.Show("Uninstaller not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    System.Windows.MessageBox.Show("Uninstaller not found.", "Error", System.Windows.MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }

@@ -6,6 +6,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ui:ThemesDictionary Theme="Dark" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" />
+                <ui:ControlsDictionary xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" />
                 <ResourceDictionary Source="Locales/es.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

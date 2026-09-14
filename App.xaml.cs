@@ -14,6 +14,8 @@ namespace FoldVision
 
         private void Application_Startup(object sender, WpfStartupEventArgs e)
         {
+            Wpf.Ui.Appearance.ApplicationThemeManager.Apply(Wpf.Ui.Appearance.ApplicationTheme.Dark);
+            
             AppSettings.Load();
             ChangeLanguage(AppSettings.Language);
 
@@ -84,11 +86,14 @@ namespace FoldVision
             var dict = new System.Windows.ResourceDictionary();
             dict.Source = new Uri($"Locales/{langCode}.xaml", UriKind.Relative);
 
-            // Reemplazar el diccionario actual
+            // Reemplazar solo el diccionario de idioma
             var appDicts = Current.Resources.MergedDictionaries;
-            if (appDicts.Count > 0)
+            for (int i = appDicts.Count - 1; i >= 0; i--)
             {
-                appDicts.Clear();
+                if (appDicts[i].Source != null && appDicts[i].Source.OriginalString.StartsWith("Locales/"))
+                {
+                    appDicts.RemoveAt(i);
+                }
             }
             appDicts.Add(dict);
 
