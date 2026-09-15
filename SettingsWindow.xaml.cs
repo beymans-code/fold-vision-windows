@@ -269,11 +269,7 @@ namespace FoldVision
 
             if (System.Windows.Application.Current is App app)
             {
-                app.ForceUpdate();
-                if (modeChanged)
-                {
-                    app.SwitchCaptureMode();
-                }
+                app.RestartEffectService();
             }
 
             _originalState = CaptureUIState();

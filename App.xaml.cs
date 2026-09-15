@@ -125,15 +125,28 @@ namespace FoldVision
             }
         }
 
+        public void RestartEffectService()
+        {
+            _overlay?.Close();
+            _overlay = new OverlayWindow { Opacity = 0 };
+            _overlay.Show();
+            
+            // Re-apply the last known fold factor to the new overlay
+            OnFoldFactorChanged(this, _lastFoldFactor);
+        }
+
         public static string GetResourceString(string key)
         {
             return Current.TryFindResource(key) as string ?? key;
         }
 
+        private float _lastFoldFactor = 0f;
+
         private void OnFoldFactorChanged(object? sender, float foldFactor)
         {
             Dispatcher.Invoke(() =>
             {
+                _lastFoldFactor = foldFactor;
                 if (_overlay == null) return;
 
                 if (AppSettings.DisableInTabletMode)
