@@ -10,6 +10,7 @@ namespace FoldVision
     {
         private System.Windows.Forms.NotifyIcon? _notifyIcon;
         private OverlayWindow? _overlay;
+        private SettingsWindow? _settingsWindow;
         private Mutex? _mutex;
 
         private void Application_Startup(object sender, WpfStartupEventArgs e)
@@ -41,7 +42,7 @@ namespace FoldVision
 
             var menu = new System.Windows.Forms.ContextMenuStrip();
             menu.Items.Add(GetResourceString("TrayDebugSensor"), null, (s, args) => new DebugWindow().Show());
-            menu.Items.Add(GetResourceString("TraySettings"), null, (s, args) => new SettingsWindow().Show());
+            menu.Items.Add(GetResourceString("TraySettings"), null, (s, args) => ShowSettings());
             menu.Items.Add("-");
             menu.Items.Add(GetResourceString("TrayExit"), null, (s, args) => Shutdown());
 
@@ -63,7 +64,7 @@ namespace FoldVision
             };
 
             // Abrir ajustes al hacer doble clic en el ícono
-            _notifyIcon.DoubleClick += (s, args) => new SettingsWindow().Show();
+            _notifyIcon.DoubleClick += (s, args) => ShowSettings();
 
             SensorService.Instance.FoldFactorChanged += OnFoldFactorChanged;
             SensorService.Instance.AngleChanged += OnAngleChanged;
@@ -108,6 +109,24 @@ namespace FoldVision
             _overlay?.SwitchCaptureMode();
         }
 
+        private void ShowSettings()
+        {
+            if (_settingsWindow != null)
+            {
+                if (_settingsWindow.WindowState == System.Windows.WindowState.Minimized)
+                    _settingsWindow.WindowState = System.Windows.WindowState.Normal;
+                _settingsWindow.Activate();
+                return;
+            }
+
+            _settingsWindow = new SettingsWindow();
+            _settingsWindow.Closed += (s, args) =>
+            {
+                _settingsWindow = null;
+            };
+            _settingsWindow.Show();
+        }
+
         public void ForceUpdate()
         {
             _overlay?.ForceRender();
@@ -125,14 +144,21 @@ namespace FoldVision
             }
         }
 
+        private bool _isRestarting = false;
+
         public void RestartEffectService()
         {
+            if (_isRestarting) return;
+            _isRestarting = true;
+            
             _overlay?.Close();
             _overlay = new OverlayWindow { Opacity = 0 };
             _overlay.Show();
             
             // Re-apply the last known fold factor to the new overlay
             OnFoldFactorChanged(this, _lastFoldFactor);
+            
+            _isRestarting = false;
         }
 
         public static string GetResourceString(string key)
@@ -159,6 +185,15 @@ namespace FoldVision
                 {
                     if (_overlay.Opacity == 0)
                     {
+                        // ESTRATEGIA SOLICITADA POR EL USUARIO:
+                        // Si ocurre el bug (tapa cerrándose mientras los ajustes están abiertos)
+                        // aplicamos los cambios (reiniciamos el efecto automáticamente)
+                        if (_settingsWindow != null && !_isRestarting)
+                        {
+                            RestartEffectService();
+                            return;
+                        }
+
                         _overlay.PrepareCapture();
                         _overlay.Opacity = 1;
                         

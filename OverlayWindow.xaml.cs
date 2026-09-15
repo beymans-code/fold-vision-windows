@@ -36,12 +36,11 @@ namespace FoldVision
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             // Clicks pasan al escritorio
-            var hwnd    = new WindowInteropHelper(this).Handle;
+            var hwnd = new WindowInteropHelper(this).Handle;
             int exStyle = NativeMethods.GetWindowLong(hwnd, NativeMethods.GWL_EXSTYLE);
             NativeMethods.SetWindowLong(hwnd, NativeMethods.GWL_EXSTYLE,
                 exStyle | NativeMethods.WS_EX_TRANSPARENT | NativeMethods.WS_EX_LAYERED | NativeMethods.WS_EX_TOOLWINDOW);
 
-            // Evitar que nuestra ventana sea capturada por DXGI (Droste effect)
             NativeMethods.SetWindowDisplayAffinity(hwnd, NativeMethods.WDA_EXCLUDEFROMCAPTURE);
 
             InitGpu();
