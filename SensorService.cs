@@ -31,7 +31,8 @@ namespace FoldVision
                 _inclinometer = Inclinometer.GetDefault();
                 if (_inclinometer != null)
                 {
-                    _inclinometer.ReportInterval = Math.Max(_inclinometer.MinimumReportInterval, 100);
+                    // Reducir la latencia al mínimo que soporte el hardware (ej. 10ms o 16ms en lugar de 100ms)
+                    _inclinometer.ReportInterval = Math.Max(_inclinometer.MinimumReportInterval, 10);
                     _inclinometer.ReadingChanged += Inclinometer_ReadingChanged;
                     return true;
                 }

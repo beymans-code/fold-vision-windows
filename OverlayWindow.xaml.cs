@@ -1,7 +1,7 @@
 using System;
 using System.Windows;
 using System.Windows.Interop;
-using System.Windows.Threading;
+using System.Windows.Media;
 using Vortice.Direct3D11;
 
 namespace FoldVision
@@ -15,7 +15,8 @@ namespace FoldVision
         private D3DImage?              _d3dImage;
 
         // ── Motor de animación ───────────────────────────────────────────
-        private DispatcherTimer? _animTimer;
+        private bool _isAnimating = false;
+        private TimeSpan _lastRenderTime = TimeSpan.Zero;
         private float _targetFold   = 0f;
         private float _curTurn      = 0f;
         private float _prevTurn     = 0f;
@@ -81,37 +82,48 @@ namespace FoldVision
                 sharedHandle);
         }
 
-        // ── Bucle de animación 60 fps ────────────────────────────────────
+        // ── Bucle de animación V-Sync ────────────────────────────────────
 
         private void StartAnimTimer()
         {
-            if (_animTimer == null)
+            if (!_isAnimating)
             {
-                _animTimer = new DispatcherTimer(DispatcherPriority.Render)
-                {
-                    Interval = TimeSpan.FromMilliseconds(16)
-                };
-                _animTimer.Tick += OnAnimTick;
-            }
-            if (!_animTimer.IsEnabled)
-            {
-                _animTimer.Start();
+                _isAnimating = true;
+                _lastRenderTime = TimeSpan.Zero;
+                CompositionTarget.Rendering += OnAnimTick;
             }
         }
 
         private void StopAnimTimer()
         {
-            _animTimer?.Stop();
+            if (_isAnimating)
+            {
+                _isAnimating = false;
+                CompositionTarget.Rendering -= OnAnimTick;
+            }
         }
 
         private void OnAnimTick(object? sender, EventArgs e)
         {
             if (_renderer == null || _d3dImage == null) return;
 
+            var args = (RenderingEventArgs)e;
+            if (_lastRenderTime == TimeSpan.Zero)
+            {
+                _lastRenderTime = args.RenderingTime;
+                return; // Omitir el primer frame para tener un dt válido
+            }
+
+            float dt = (float)(args.RenderingTime - _lastRenderTime).TotalSeconds;
+            _lastRenderTime = args.RenderingTime;
+
+            // Evitar dt muy grandes (ej. despertar de suspensión) que rompen la física de resorte.
+            // Si el frame tardó más de 50ms, asumimos un dt ideal de 16ms.
+            if (dt > 0.05f) dt = 0.016f;
+
             _prevTurn = _curTurn;
 
             // Spring physics
-            float dt          = 16f / 1000f;
             float springForce = SpringTension * (_targetFold - _curTurn) - SpringDamping * _turnVelocity;
             _turnVelocity += springForce * dt;
             _curTurn      += _turnVelocity * dt;
@@ -261,7 +273,7 @@ namespace FoldVision
         // ─────────────────────────────────────────────────────────────────
         private void OnClosed(object? sender, EventArgs e)
         {
-            _animTimer?.Stop();
+            StopAnimTimer();
             _staticCapture?.Dispose();
             _liveCapture?.Dispose();
             _renderer?.Dispose();
