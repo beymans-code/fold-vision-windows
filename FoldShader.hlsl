@@ -87,13 +87,14 @@ float4 SampleVogelBlur(float2 uv, float radius, float2 screenCoord, int maxSampl
 
     float4 accum       = 0;
     float  totalWeight = 0;
-    // Aumentar masivamente las muestras para evitar ruido con blur de 200px
-    int    active      = clamp((int)(radius * 0.8), 24, 128);
+    // Optimización extrema: Limitar a 48 muestras para evitar cuellos de botella en la GPU en monitores 4K.
+    // El micro-rotado de Vogel compensa el ruido en radios muy grandes de blur.
+    int    active      = clamp((int)(radius * 0.8), 24, 48);
 
     float pixelSize = radius / imageSize.x; // radio en UV-space
 
-    // Loop hasta 128 muestras
-    for (int i = 0; i < 128; i++)
+    // Loop optimizado hasta 48 muestras
+    for (int i = 0; i < 48; i++)
     {
         if (i >= active) break;
 

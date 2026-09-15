@@ -113,7 +113,7 @@ The visual canvas of the application.
 
 ### 3. `Capture Services`
 To create the illusion of the screen folding, the app must capture whatever is currently on the user's desktop.
-- **`StaticCaptureService.cs`:** Used in "Static Mode". It uses GDI+ (`CopyFromScreen`) to take a single, instantaneous photograph of the screen exactly 1 millisecond before the `OverlayWindow` becomes visible. It is highly battery efficient because it only captures the screen once per fold.
+- **`StaticCaptureService.cs`:** Used in "Static Mode". It uses the DirectX `IDXGIOutputDuplication` API (via DXGI) to capture a single, instantaneous photograph of the screen directly on the GPU exactly 1 millisecond before the `OverlayWindow` becomes visible, ensuring zero CPU bottleneck. It is highly battery efficient because it only captures the screen once per fold and then releases the DXGI context.
 - **`LiveCaptureService.cs`:** Used in "Live Mode". It uses the DirectX `IDXGIOutputDuplication` API to continuously stream the desktop at 60 FPS directly to the GPU. This allows video and animations to continue playing seamlessly while the screen is folded.
 
 ### 4. `GpuRenderer.cs` & `FoldShader.hlsl`
