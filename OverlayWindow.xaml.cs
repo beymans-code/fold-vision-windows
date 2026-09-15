@@ -179,8 +179,8 @@ namespace FoldVision
                 _forceRender = false;
             }
 
-            // Auto-ocultar cuando la animación de apertura termina
-            if (!isAnimating && _curTurn == 0f && Opacity > 0)
+            // Auto-ocultar cuando la animación de apertura termina (margen de error de 1.5% por ruido del hardware)
+            if (!isAnimating && _curTurn <= 0.015f && Opacity > 0)
             {
                 Opacity = 0;
                 StopAnimTimer();

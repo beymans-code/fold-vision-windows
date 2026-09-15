@@ -181,7 +181,8 @@ namespace FoldVision
                     if (isTabletMode) foldFactor = 0f;
                 }
 
-                if (foldFactor > 0.001f)
+                // Margen de error del 1.5% para evitar que el ruido del hardware deje pegada la animación
+                if (foldFactor > 0.015f)
                 {
                     if (_overlay.Opacity == 0)
                     {
