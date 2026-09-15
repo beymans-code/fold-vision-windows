@@ -55,6 +55,16 @@
     <system:String x:Key="LangSpanish">Español</system:String>
     <system:String x:Key="LangEnglish">English</system:String>
 
+    <system:String x:Key="CatGeneral">GENERAL</system:String>
+    <system:String x:Key="CatBehavior">COMPORTAMIENTO</system:String>
+    <system:String x:Key="CatAppearance">APARIENCIA</system:String>
+    <system:String x:Key="CatCorners">ESQUINAS Y MÁSCARA</system:String>
+    <system:String x:Key="CatAnimation">ANIMACIÓN</system:String>
+
+    <system:String x:Key="FabUndo">Deshacer (Ctrl+Z)</system:String>
+    <system:String x:Key="FabRedo">Rehacer (Ctrl+Y)</system:String>
+    <system:String x:Key="FabApply">Aplicar cambios</system:String>
+
     <!-- Uninstall -->
     <system:String x:Key="UninstallButton">Desinstalar Aplicación</system:String>
     <system:String x:Key="UninstallConfirmTitle">Confirmar Desinstalación</system:String>
