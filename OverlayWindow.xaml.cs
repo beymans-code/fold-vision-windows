@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -22,6 +23,10 @@ namespace FoldVision
         private float _prevTurn     = 0f;
         private float _turnVelocity = 0f;
         private bool  _forceRender  = false;
+        private bool  _isMagneticOverride = false; // FIX 3: Evita que el giroscopio interrumpa la animación magnética
+        
+        // Handle para FIX 3: Notificaciones de energía (Lid Switch)
+        private IntPtr _powerNotifyHandle = IntPtr.Zero;
 
         private const float SpringTension = 250f;
         private const float SpringDamping = 30f;
@@ -43,6 +48,15 @@ namespace FoldVision
                 exStyle | NativeMethods.WS_EX_TRANSPARENT | NativeMethods.WS_EX_LAYERED | NativeMethods.WS_EX_TOOLWINDOW);
 
             NativeMethods.SetWindowDisplayAffinity(hwnd, NativeMethods.WDA_EXCLUDEFROMCAPTURE);
+
+            // FIX 3: Registrar para escuchar al interruptor magnético (Lid Switch)
+            Guid lidGuid = NativeMethods.GUID_LIDSWITCH_STATE_CHANGE;
+            _powerNotifyHandle = NativeMethods.RegisterPowerSettingNotification(
+                hwnd, 
+                ref lidGuid, 
+                0);
+
+            HwndSource.FromHwnd(hwnd)?.AddHook(WndProc);
 
             InitGpu();
             StartAnimTimer();
@@ -132,6 +146,7 @@ namespace FoldVision
             {
                 _curTurn      = _targetFold;
                 _turnVelocity = 0f;
+                _isMagneticOverride = false; // Liberamos el control para que el giroscopio vuelva a funcionar
             }
 
             // MotionBoost
@@ -253,6 +268,8 @@ namespace FoldVision
         /// <summary>Actualiza el factor de pliegue objetivo.</summary>
         public void ApplyEffect(float foldFactor)
         {
+            if (_isMagneticOverride) return; // Ignorar el giroscopio mientras el sensor magnético hace la transición de apertura
+            
             _targetFold = foldFactor;
             StartAnimTimer();
         }
@@ -271,8 +288,53 @@ namespace FoldVision
         }
 
         // ─────────────────────────────────────────────────────────────────
+        
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            if (msg == NativeMethods.WM_POWERBROADCAST && wParam.ToInt32() == NativeMethods.PBT_POWERSETTINGCHANGE)
+            {
+                var setting = Marshal.PtrToStructure<NativeMethods.POWERBROADCAST_SETTING>(lParam);
+                if (setting.PowerSetting == NativeMethods.GUID_LIDSWITCH_STATE_CHANGE)
+                {
+                    bool isLidOpen = setting.Data != 0;
+                    string logPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(AppSettings.GetCrashLogPath()) ?? "", "lid_switch.log");
+
+                    if (isLidOpen)
+                    {
+                        try { System.IO.File.AppendAllText(logPath, $"[{DateTime.Now:HH:mm:ss.fff}] LID SWITCH: OPEN. Forzando transición completa desde 100% cerrada a 0% abierta.\n"); } catch { }
+
+                        // Mostrar la ventana y capturar si es necesario
+                        Opacity = 1;
+                        if (_staticCapture == null || _staticCapture.LatestFrame == null)
+                        {
+                            PrepareCapture();
+                        }
+
+                        // FIX 3: Forzamos que empiece completamente oscuro (1.0f) y se abra hasta 0.0f
+                        _curTurn = 1.0f;
+                        _targetFold = 0f;
+                        _turnVelocity = 0f;
+                        _isMagneticOverride = true; // Bloquea al giroscopio hasta que termine la animación
+                        
+                        StartAnimTimer();
+                    }
+                    else
+                    {
+                        try { System.IO.File.AppendAllText(logPath, $"[{DateTime.Now:HH:mm:ss.fff}] LID SWITCH: CLOSED.\n"); } catch { }
+                    }
+                }
+            }
+            return IntPtr.Zero;
+        }
+
         private void OnClosed(object? sender, EventArgs e)
         {
+            if (_powerNotifyHandle != IntPtr.Zero)
+            {
+                NativeMethods.UnregisterPowerSettingNotification(_powerNotifyHandle);
+                _powerNotifyHandle = IntPtr.Zero;
+            }
+
             StopAnimTimer();
             _staticCapture?.Dispose();
             _liveCapture?.Dispose();
