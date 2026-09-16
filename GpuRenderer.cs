@@ -250,6 +250,13 @@ namespace FoldVision
         }
 
         // ── Cleanup ──────────────────────────────────────────────────────
+        public void Clear()
+        {
+            if (_rtv == null) return;
+            _ctx.ClearRenderTargetView(_rtv, new Vortice.Mathematics.Color4(0.0f, 0.0f, 0.0f, 0.0f));
+            _ctx.Flush();
+        }
+
         public void Dispose()
         {
             _rtv?.Dispose();

@@ -199,11 +199,20 @@ namespace FoldVision
             {
                 Opacity = 0;
                 StopAnimTimer();
+
+                // Limpiar la textura en la memoria de la GPU y actualizar WPF.
+                // Esto garantiza que la próxima vez que Opacity sea 1, la ventana
+                // sea transparente y no muestre un "parpadeo" con la imagen vieja.
+                _renderer?.Clear();
+                _d3dImage?.Lock();
+                if (_d3dImage != null) _d3dImage.AddDirtyRect(new Int32Rect(0, 0, _d3dImage.PixelWidth, _d3dImage.PixelHeight));
+                _d3dImage?.Unlock();
                 
                 if (AppSettings.AppMode == "Static")
                 {
                     _staticCapture?.Dispose();
-                    _staticCapture = new StaticCaptureService(_renderer.Device);
+                    if (_renderer != null)
+                        _staticCapture = new StaticCaptureService(_renderer.Device);
                 }
                 else if (AppSettings.AppMode == "Live")
                 {
